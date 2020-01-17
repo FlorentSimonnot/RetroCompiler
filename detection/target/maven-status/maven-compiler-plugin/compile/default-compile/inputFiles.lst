@@ -1,0 +1,16 @@
+/Users/florentsimonnot/Documents/M1/projectJava/detection/src/main/java/fr/project/detection/observers/RecordObserver.java
+/Users/florentsimonnot/Documents/M1/projectJava/detection/src/main/java/fr/project/detection/methodVisitor/MyMethodVisitor.java
+/Users/florentsimonnot/Documents/M1/projectJava/detection/src/main/java/fr/project/detection/classVisitor/package-info.java
+/Users/florentsimonnot/Documents/M1/projectJava/detection/src/main/java/fr/project/detection/visitor/package-info.java
+/Users/florentsimonnot/Documents/M1/projectJava/detection/src/main/java/fr/project/detection/observers/NestMemberObserver.java
+/Users/florentsimonnot/Documents/M1/projectJava/detection/src/main/java/fr/project/detection/observers/FeaturesManager.java
+/Users/florentsimonnot/Documents/M1/projectJava/detection/src/main/java/fr/project/detection/observers/FeaturesObserverFactory.java
+/Users/florentsimonnot/Documents/M1/projectJava/detection/src/main/java/fr/project/detection/observers/LambdaObserver.java
+/Users/florentsimonnot/Documents/M1/projectJava/detection/src/main/java/fr/project/detection/visitor/MyVisitor.java
+/Users/florentsimonnot/Documents/M1/projectJava/detection/src/main/java/fr/project/detection/observers/package-info.java
+/Users/florentsimonnot/Documents/M1/projectJava/detection/src/main/java/fr/project/detection/observers/ConcatenationObserver.java
+/Users/florentsimonnot/Documents/M1/projectJava/detection/src/main/java/fr/project/detection/methodVisitor/package-info.java
+/Users/florentsimonnot/Documents/M1/projectJava/detection/src/main/java/module-info.java
+/Users/florentsimonnot/Documents/M1/projectJava/detection/src/main/java/fr/project/detection/classVisitor/MyClassVisitor.java
+/Users/florentsimonnot/Documents/M1/projectJava/detection/src/main/java/fr/project/detection/observers/FeatureObserver.java
+/Users/florentsimonnot/Documents/M1/projectJava/detection/src/main/java/fr/project/detection/observers/TryWithResourcesObserver.java

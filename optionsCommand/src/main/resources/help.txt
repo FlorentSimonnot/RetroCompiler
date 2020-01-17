@@ -1,0 +1,27 @@
+Use : retro [OPTION] ... [FILE]
+Analyze bytecode of FILE (a java file executable, a java jar executable or a repository)
+and search some features.
+
+Note : If the file is a repository, only files in the root are analyzed.
+
+Features :
+    - Try with resource (since Java 7)
+    - Lambda (since Java 8)
+    - Concatenation (since Java 9)
+    - Nest Members (since Java 11)
+    - Record Class (since Java 14)
+
+Options :
+    --help                                              Show help.
+    --info                                              Show all of features which are detected.
+    --target [=VERSION]                                 Rewrite the file in java VERSION without changes.
+                                                        This process can be failed if the file contain features.
+                                                        We can use --force option in order to force the rewriting.
+    --force                                             Only use with --target [=VERSION] option. Force the retro compilation.
+                                                        The features which are detected will be translate in the VERSION.
+    --features "[feature1, ..., featureN]"              Only use with --target [=VERSION] and force options. All of features in
+                                                        arguments will be translate in the VERSION. Other features will be only rewriting.
+
+Developers :
+    - Jonathan Chu
+    - Florent Simonnot

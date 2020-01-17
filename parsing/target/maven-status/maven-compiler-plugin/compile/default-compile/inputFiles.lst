@@ -1,0 +1,15 @@
+/Users/florentsimonnot/Documents/M1/projectJava/parsing/src/main/java/module-info.java
+/Users/florentsimonnot/Documents/M1/projectJava/parsing/src/main/java/fr/project/parsing/parser/ParserFactory.java
+/Users/florentsimonnot/Documents/M1/projectJava/parsing/src/main/java/fr/project/parsing/parser/ParserException.java
+/Users/florentsimonnot/Documents/M1/projectJava/parsing/src/main/java/fr/project/parsing/parser/package-info.java
+/Users/florentsimonnot/Documents/M1/projectJava/parsing/src/main/java/fr/project/parsing/parser/FileParser.java
+/Users/florentsimonnot/Documents/M1/projectJava/parsing/src/main/java/fr/project/parsing/files/FilesCollector.java
+/Users/florentsimonnot/Documents/M1/projectJava/parsing/src/main/java/fr/project/parsing/parser/JarParser.java
+/Users/florentsimonnot/Documents/M1/projectJava/parsing/src/main/java/fr/project/parsing/files/package-info.java
+/Users/florentsimonnot/Documents/M1/projectJava/parsing/src/main/java/fr/project/parsing/parser/DirectoryParser.java
+/Users/florentsimonnot/Documents/M1/projectJava/parsing/src/main/java/fr/project/parsing/files/DirectoryFile.java
+/Users/florentsimonnot/Documents/M1/projectJava/parsing/src/main/java/fr/project/parsing/files/JarFileC.java
+/Users/florentsimonnot/Documents/M1/projectJava/parsing/src/main/java/fr/project/parsing/parser/FileParserInterface.java
+/Users/florentsimonnot/Documents/M1/projectJava/parsing/src/main/java/fr/project/parsing/files/FileClass.java
+/Users/florentsimonnot/Documents/M1/projectJava/parsing/src/main/java/fr/project/parsing/files/FileInterface.java
+/Users/florentsimonnot/Documents/M1/projectJava/parsing/src/main/java/fr/project/parsing/parser/FileClassParser.java

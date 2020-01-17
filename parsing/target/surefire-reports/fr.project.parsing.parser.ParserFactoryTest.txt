@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: fr.project.parsing.parser.ParserFactoryTest
+-------------------------------------------------------------------------------
+Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.014 sec - in fr.project.parsing.parser.ParserFactoryTest

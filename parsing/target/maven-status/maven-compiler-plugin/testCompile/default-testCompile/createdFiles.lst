@@ -1,0 +1,7 @@
+fr/project/parsing/files/FileClassTest.class
+fr/project/parsing/parser/ParserFactoryTest.class
+fr/project/parsing/files/FilesCollectorTest.class
+fr/project/parsing/parser/DirectoryParserTest.class
+fr/project/parsing/parser/JarParserTest.class
+fr/project/parsing/parser/FileParserTest.class
+fr/project/parsing/parser/FileClassParserTest.class
