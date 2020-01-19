@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css?family=Lemonada&display=swap');
+
+body{
+ background-color : rgba(189, 195, 199,0.5);
+}
+
+.row{
+    display : grid;
+    grid-template-columns : 40% 60%;
+    padding : 20px;
+}
+
+.row-right{
+    display : grid;
+    grid-template-columns : 60% 40%;
+    padding : 20px;
+}
+
+.content{
+    padding : 5px;
+    font-family : "Lemonada", cursive;
+    text-align : center;
+    color : #fff;
+}
+
+.header{
+    border-radius : 15px 15px 0px 0px;
+}
+
+.body{
+    border-top : 2px solid #fff;
+    border-radius : 0px 0px 15px 15px ;
+    padding : 5px;
+}
+
+.__1__{
+    background : rgba(41, 128, 185,0.75);
+}
+
+.__2__{
+    background-color : rgba(22, 160, 133,0.75);
+}
+
+.option-table{
+    width : 100%;
+}
+
+.option-table  th{
+    border : 1px solid #fff;
+}
+
+.option-table td{
+    border : 1px dashed #fff;
+}
+
+.option-table > td:first-child, th:first-child{
+    width : 25%;
+}
+
+li{
+    list-style : none;
+}
+
+/* -------------------------------------------------- *\
+                        RESPONSIVE
+\* -------------------------------------------------- */
+@media screen and (max-width : 1300px){
+
+    .row{
+        display : grid;
+        grid-template-columns : 60% 40%;
+        padding : 20px;
+    }
+
+    .row-right{
+        display : grid;
+        grid-template-columns : 40% 60%;
+        padding : 20px;
+    }
+
+}
+
+@media screen and (max-width : 700px){
+
+    .row{
+        display : grid;
+        grid-template-columns : 100% 0%;
+        padding : 20px;
+    }
+
+    .row-right{
+        display : grid;
+        grid-template-columns : 0% 100%;
+        padding : 20px;
+    }
+
+}
