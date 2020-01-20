@@ -1,0 +1,16 @@
+module:detection
+fr.project.detection.classVisitor
+fr.project.detection.methodVisitor
+fr.project.detection.observers
+fr.project.detection.visitor
+module:instructions
+fr.project.instructions.features
+fr.project.instructions.simple
+module:optionsCommand
+fr.project.optionsCommand
+module:parsing
+fr.project.parsing.files
+fr.project.parsing.parser
+module:writing
+fr.project.warningObservers
+fr.project.writer

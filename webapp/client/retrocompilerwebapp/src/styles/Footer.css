@@ -36,6 +36,10 @@ img{
     margin-right : 20px;
 }
 
+.right-container{
+    display : block;
+}
+
 /* -------------------------------------------------- *\
                         RESPONSIVE
 \* -------------------------------------------------- */
@@ -47,6 +51,15 @@ img{
         grid-template-columns : none;
     }
 
+    .left-container{
+        text-align : center;
+    }
+
+    .left-container > table{
+        margin : 0;
+        width : 100%;
+    }
+
     .right-container{
         margin : 0 auto;
         text-align : center
@@ -55,6 +68,14 @@ img{
     img{
         float : left;
         margin : 0 auto;
+    }
+
+}
+
+@media screen and (max-height : 600px){
+
+    .right-container{
+        display : none;
     }
 
 }

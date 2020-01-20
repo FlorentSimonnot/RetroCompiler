@@ -16,3 +16,19 @@
 .main-container, .nav-container, .footer-container {
     flex-shrink: 0;
 }
+
+@media screen and (max-width : 600px){
+
+    .main-container{
+        margin-bottom : 200px;
+    }
+
+}
+
+@media screen and (max-height : 600px){
+
+    .main-container{
+        margin-bottom : 130px;
+    }
+
+}
