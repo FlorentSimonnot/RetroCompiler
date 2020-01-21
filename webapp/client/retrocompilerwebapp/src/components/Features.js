@@ -11,13 +11,15 @@ class Features extends Component {
 		super(props);
 		this.state = {
 				info: false,
-				lambda: false,
-				tryWithResources: false,
-				concatenation: false,
-				record: false,
-				nestMates: false,
+				selectAll: true,
+				lambda: true,
+				tryWithResources: true,
+				concatenation: true,
+				record: true,
+				nestMates: true,
 		};
 		this.handleInputChange = this.handleInputChange.bind(this);
+		this.handleClick = this.handleClick.bind(this);
 	}
 
 	handleInputChange(event) {
@@ -28,17 +30,39 @@ class Features extends Component {
 		this.setState({
 			[name]:value,
 		});
-		this.checkAny();
 	}
 
-	checkAny() {
+	handleClick(event) {
+		const selectAll = this.state.selectAll;
+		
 		this.setState({
-			any: this.state.lambda ||
-			this.state.tryWithResources ||
-			this.state.concatenation ||
-			this.state.record ||
-			this.state.nestMates,
+			selectAll: !selectAll,
 		});
+		
+		this.checkAll();
+	}
+
+	checkAll() {
+		const selectAll = this.state.selectAll;
+
+		if (!selectAll) {
+			this.setState({
+				lambda: true,
+				tryWithResources: true,
+				concatenation: true,
+				record: true,
+				nestMates: true,
+			});
+		}
+		else {
+			this.setState({
+				lambda: false,
+				tryWithResources: false,
+				concatenation: false,
+				record: false,
+				nestMates: false,
+			});
+		}
 	}
 
 	render() {
@@ -49,12 +73,19 @@ class Features extends Component {
 		if (info) {
 			features = 
 				<form>
-				<label>
+			<label>
 			Features:
 				</label>
 
 			<br/>	
-				
+
+			<button type="button"
+				onClick={this.handleClick} >
+			{this.state.selectAll ? "Unselect all" : "Select all"}
+			</button>
+
+			<br/>
+
 			<input
 			name="lambda"
 				type="checkbox"
@@ -135,5 +166,15 @@ class Features extends Component {
 		);
 	}
 }
+
+//<input
+//name="selectAll"
+//type="checkbox"
+//checked={this.state.selectAll}
+//onChange={this.handleInputChange} />
+//<label>
+//Select/Unselect all
+//</label>
+
 
 export default Features;

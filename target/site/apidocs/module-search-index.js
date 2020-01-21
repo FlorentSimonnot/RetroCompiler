@@ -1,0 +1,1 @@
+moduleSearchIndex = [{"l":"detection"},{"l":"instructions"},{"l":"optionsCommand"},{"l":"parsing"},{"l":"writing"}]
