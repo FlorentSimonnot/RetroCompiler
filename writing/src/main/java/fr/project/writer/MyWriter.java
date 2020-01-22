@@ -49,6 +49,8 @@ public class MyWriter implements Writer{
         cw.visit(version, myClass.getPrivacy(), myClass.getClassName(), null, "java/lang/Object", myClass.getInterfaces());
         myClass.getInnerClasses().forEach(this::writeInnerClass);
         writeSourceFile(myClass.getSourceName());
+
+        //We can write NestHost and nestMates because version is accepted.
         if(version >= FieldInstruction.VERSION){
             myClass.getNestMembers().forEach(this::writeNestMember);
             myClass.getNestHosts().forEach(this::writeNestHost);
@@ -84,12 +86,10 @@ public class MyWriter implements Writer{
     }
 
     private void writeNestMember(String member){
-        //if(version > FieldInstruction.VERSION)
         cw.visitNestMember(member);
     }
 
     private void writeNestHost(String host){
-        //if(version > FieldInstruction.VERSION)
         cw.visitNestHost(host);
     }
 
@@ -98,19 +98,23 @@ public class MyWriter implements Writer{
     }
 
     private void writeLambdaFile(LambdaInstruction lambdaInstruction, int index) {
-        var lambdaClass = new MyClass(Opcodes.ACC_STATIC+Opcodes.ACC_PRIVATE, myClass.getClassName()+"$MyLambda"+index, "java/lang/Object", null);
+        var lambdaClass = new MyClass(Opcodes.ACC_PUBLIC+Opcodes.ACC_STATIC, myClass.getClassName()+"$MyLambda"+index, "java/lang/Object", null);
+        var methodLambda = new Method(Opcodes.ACC_PUBLIC + Opcodes.ACC_ABSTRACT, lambdaInstruction.getName(),
+                Type.getMethodDescriptor(lambdaInstruction.getReturnType(), lambdaInstruction.getArgumentsType()), null, true, null);
 
+        //System.err.println(Type.getMethodDescriptor(lambdaInstruction.getReturnType(), lambdaInstruction.getArgumentsType()));
+
+        LambdaWriter.createInterface(lambdaClass);
         LambdaWriter.createFields(lambdaClass, lambdaInstruction);
         LambdaWriter.createConstructor(lambdaClass, lambdaInstruction);
         LambdaWriter.createLambdaFactory(lambdaClass, lambdaInstruction, myClass.getClassName(), index);
-        LambdaWriter.createLambdaCalledMethod(lambdaClass, lambdaInstruction, myClass.getClassName(), index);
+        LambdaWriter.createLambdaCalledMethod(lambdaClass, methodLambda);
 
-        var lambdaWriter = new MyWriter(lambdaClass, version, null, null);
+        var lambdaWriter = new MyWriter(lambdaClass, version, this.warningObservers, this.options);
         lambdaWriter.createClass();
 
         lambdaWriter.writeSourceFile(myClass.getClassName()+".java");
         lambdaWriter.writeNestHost(myClass.getClassName());
-        //lambdaWriter.writeInnerClass(myClass.getClassName());
 
         lambdaWriter.writeFields();
         lambdaWriter.writeConstructors();
@@ -118,6 +122,14 @@ public class MyWriter implements Writer{
 
         try {
             lambdaWriter.createFile();
+
+            //Now write the interface file
+            var interfac = new MyInterface("interface"+myClass.getClassName()+"$MyLambda"+index, "java/lang/Object",Opcodes.ACC_ABSTRACT+Opcodes.ACC_PUBLIC, version);
+            interfac.addMethod(methodLambda);
+            var writer = new InterfaceWriter(interfac);
+            writer.createClass();
+            writer.writeMethods();
+            writer.createFile();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -153,20 +165,28 @@ public class MyWriter implements Writer{
 
         //Write access methods if is a inner class
         if(myClass.getClassName().contains("$")){
-            myClass.getFields().stream().filter(n -> !n.getName().contains("this")).forEach(this::writeAccessMethod);
+            if(version < FieldInstruction.VERSION) {
+
+                if (options.forceIsDemanding()){
+                    myClass.getFields().stream().filter(n -> !n.getName().contains("this")).forEach(this::writeAccessMethod);
+                }
+                else{
+                    warningObservers.forEach(o -> o.onWarningDetected("We have detected a nestMates in " + myClass.getClassName(), "nestMates"));
+                }
+            }
         }
     }
 
     private void writeAccessMethod(Field f){
         //Getter
-        mw = cw.visitMethod(Opcodes.ACC_STATIC+Opcodes.ACC_PUBLIC, "accessGetter$"+f.getName().toUpperCase(), "(L"+myClass.getClassName()+";)"+f.getDescriptor(), null, null);
+        mw = cw.visitMethod(Opcodes.ACC_STATIC+Opcodes.ACC_PUBLIC, "accessGetter"+f.getName().toUpperCase(), "(L"+myClass.getClassName()+";)"+f.getDescriptor(), null, null);
         mw.visitVarInsn(Opcodes.ALOAD, 0);
         mw.visitFieldInsn(Opcodes.GETFIELD, myClass.getClassName(), f.getName(), f.getDescriptor());
         mw.visitInsn(UtilsWriter.getReturnInAccordingToTheType(f.getDescriptor()));
         mw.visitMaxs(0, 0);
         mw.visitEnd();
         //Setter
-        mw = cw.visitMethod(Opcodes.ACC_STATIC+Opcodes.ACC_PUBLIC, "accessSetter$"+f.getName().toUpperCase(), "(L"+myClass.getClassName()+";"+f.getDescriptor()+")"+f.getDescriptor(), null, null);
+        mw = cw.visitMethod(Opcodes.ACC_STATIC+Opcodes.ACC_PUBLIC, "accessSetter"+f.getName().toUpperCase(), "(L"+myClass.getClassName()+";"+f.getDescriptor()+")"+f.getDescriptor(), null, null);
         mw.visitVarInsn(Opcodes.ALOAD, 0);
         mw.visitVarInsn(UtilsWriter.getLoadInAccordingToTheType(f.getDescriptor()), 1);
         mw.visitInsn(UtilsWriter.getDupOrDup2(f.getDescriptor()));
@@ -178,7 +198,7 @@ public class MyWriter implements Writer{
 
     private void writeMethod(Method m) {
         if(m.getName().contains("$"))
-            mw = cw.visitMethod(m.getAccess(), m.getName(), m.getDescriptor(), m.getSignature(), m.getExceptions());
+            mw = cw.visitMethod(Opcodes.ACC_PUBLIC, m.getName(), m.getDescriptor(), m.getSignature(), m.getExceptions());
         else{
             mw = cw.visitMethod(m.getAccess(), m.getName(), m.getDescriptor(), m.getSignature(), m.getExceptions());
         }
@@ -187,7 +207,6 @@ public class MyWriter implements Writer{
         mw.visitMaxs(0, 0);
         mw.visitEnd();
     }
-
 
     /**
      * Creates a new .class file with the bytecode.

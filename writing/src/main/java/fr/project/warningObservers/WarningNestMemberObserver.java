@@ -14,13 +14,13 @@ public class WarningNestMemberObserver implements WarningObserver {
 
     @Override
     public void onWarningDetected(String warning, String token) {
-        if(token.equals("nestMember")) warnings.add(warning);
+        if(token.equals("nestMates")) warnings.add(warning);
     }
 
     @Override
     public void showWarning() {
         if(warnings.size() == 0) return;
-        System.err.println("We found " +  warnings.size() + " nest Members !");
+        System.err.println("We found " +  warnings.size() + " nest Mates !");
         warnings.forEach(System.out::println);
     }
 

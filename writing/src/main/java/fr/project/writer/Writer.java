@@ -16,12 +16,14 @@ public interface Writer {
 
     public void createClass();
 
-
     /**
      * Writes all the lambdas of a .class file into a new .class file according to a target version.
      */
     public void writeLambdaInnerClasses();
 
+    /**
+     * Create and write a .class file for each lambda which are founded.
+     */
     public void writeLambdaFiles();
 
     /**
@@ -46,15 +48,32 @@ public interface Writer {
      */
     public String createFile() throws IOException;
 
+    /**
+     * return a list of observers which represents warnings.
+     * @return List<WarningObserver> - a List of WarningObserver.
+     */
     public List<WarningObserver> getObservers();
 
+    /**
+     * Return the class we want write.
+     * @return MyClass - an object which represents a class.
+     */
     MyClass getMyClass();
 
+    /**
+     * Return the method visitor use to write a method.
+     * @return MethodVisitor - A MethodVisitor to write a method.
+     */
     MethodVisitor getMethodVisitor();
 
     void setMethodVisitor(MethodVisitor methodVisitor);
 
+    /**
+     * Return the java version use to write the file.
+     * @return int - The java version.
+     */
     int getVersion();
+
 
     ClassWriter getClassWriter();
 }

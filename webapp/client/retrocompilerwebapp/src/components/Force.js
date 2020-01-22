@@ -26,19 +26,20 @@ class Force extends Component{
 
 	render(){
 		return(
-				<form>
+				<div>
 
-				<label>
-				Force:
-				</label>
+                    <input
+                        name="force"
+                        type="checkbox"
+                        id="force"
+                        checked={this.state.force}
+                         onChange={this.handleInputChange} />
 
-				<input
-				name="force"
-					type="checkbox"
-						checked={this.state.force}
-				onChange={this.handleInputChange} />
+                         <label htmlFor="force">
+                            Force the retro compilation
+                         </label>
 
-				</form>
+				</div>
 		);
 	}
 

@@ -8,6 +8,7 @@
     color : #fff;
     position : fixed;
     top : 0;
+    z-index : 10000;
 }
 
 .Nav > ul {
@@ -94,5 +95,15 @@ color : #b71540;
     .Nav li:first-child, .Nav li:last-child{
         border-bottom : none;
     }
+
+}
+
+@media screen and (min-width : 801px){
+
+    .Nav ul{
+        width : 100% !important;
+        display : block !important;
+    }
+
 
 }

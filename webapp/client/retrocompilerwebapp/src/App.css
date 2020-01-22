@@ -8,13 +8,27 @@
 }
 
 .main-container {
-    flex-grow: 1;
-    margin-top : 60px;
-    margin-bottom : 120px;
+    margin-top : 20px;
+    margin-bottom : 20px;
+    width: 100%;
+    position: relative;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.nav-container{
+    height : 60px
+}
+
+.footer-container{
+    height : 120px;
 }
 
 .main-container, .nav-container, .footer-container {
     flex-shrink: 0;
+    flex-direction: column;
 }
 
 @media screen and (max-width : 600px){

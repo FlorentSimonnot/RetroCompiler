@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css?family=Concert+One|Signika&display=swap');
+
+.form{
+    min-height : 60%;
+    background-color : #fff;
+    width : 60%;
+    margin-left : 20%;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    border-radius: 5px;
+    margin-bottom : 30px;
+    padding-bottom : 10px;
+}
+
+#submit{
+    font-family : 'Signika', sans-serif;
+    background-color : rgba(96, 163, 188,1.0);
+    color : #fff;
+    font-size : 20px;
+    padding : 10px;
+    border : none;
+    border-radius : 10px;
+    cursor : pointer;
+}
+
+.submit-container{
+    margin : 0 auto;
+    text-align : center;
+}
+
+@media screen and (max-width : 800px){
+    .form{
+        width : 80%;
+        margin-left : 10%;
+    }
+}

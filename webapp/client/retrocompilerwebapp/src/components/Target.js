@@ -4,6 +4,7 @@
 
 import React, {Component} from 'react';
 import Force from './Force.js';
+import "../styles/Target.css"
 
 class Target extends Component {
 
@@ -32,51 +33,57 @@ class Target extends Component {
 		});
 	}
 
+
 	render() {
 		const targetOption = this.state.targetOption;
-		let versionList;
-		let force;
+		let details;
 		
 		if(targetOption) {
-			versionList = <label>
-				Choose the target version:
-				<select value={this.state.targetVersion} onChange={this.handleChange}>
-					<option value='5'>5</option>
-					<option value='6'>6</option>
-					<option value='7'>7</option>
-					<option value='8'>8</option>
-					<option value='9'>9</option>
-					<option value='10'>10</option>
-					<option value='11'>11</option>
-					<option value='12'>12</option>
-					<option value='13'>13</option>
-					<option value='14'>14</option>
-				</select>
-			</label>;
-			
-			force = <Force />;
+
+            details = <div className="target-details">
+
+                <label>
+                    Choose the target version:
+                    <select value={this.state.targetVersion} onChange={this.handleChange}>
+                        <option value='5'>5</option>
+                        <option value='6'>6</option>
+                        <option value='7'>7</option>
+                        <option value='8'>8</option>
+                        <option value='9'>9</option>
+                        <option value='10'>10</option>
+                        <option value='11'>11</option>
+                        <option value='12'>12</option>
+                        <option value='13'>13</option>
+                    </select>
+                </label>
+                <br /><br/>
+
+                <Force />
+
+            </div>
+
 		}
 		
 		return(
 				
-			<form>
-			
-			<label>
-			Do you want to rewrite your java code?
-			</label>		
-			<input
-			name="targetOption"
-				type="checkbox"
-					checked={this.state.targetOption}
-			onChange={this.handleInputChange} />
-				
-			<br/>
-			
-			{versionList}
-			
-			{force}
-			
-			</form>
+			<div className="target">
+
+                <input
+                    name="targetOption"
+                    type="checkbox"
+                    id="targetOption"
+                    checked={this.state.targetOption}
+                    onChange={this.handleInputChange} />
+
+                <label htmlFor="targetOption" className="checkbox-main">
+                    Do you want to rewrite your java code?
+                </label>
+
+                <br/>
+
+			     {details}
+
+			</div>
 		);
 	}
 }

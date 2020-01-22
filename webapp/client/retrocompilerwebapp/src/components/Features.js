@@ -4,6 +4,7 @@
 
 import React, {Component} from 'react';
 import Force from './Force.js';
+import "../styles/Features.css"
 
 class Features extends Component {
 
@@ -72,73 +73,88 @@ class Features extends Component {
 
 		if (info) {
 			features = 
-				<form>
-			<label>
-			Features:
-				</label>
+            <div className="features-details">
+                <div className="features-checkbox">
+                    <label>
+                        Choose feature(s) you want to detect :
+                    </label>
+                    <br/>
 
-			<br/>	
+                    <div className="row-features-checkbox-1">
+                        <div>
+                            <input
+                                name="lambda"
+                                type="checkbox"
+                                id="lambda"
+                                checked={this.state.lambda}
+                                onChange={this.handleInputChange} />
+                            <label htmlFor="lambda">
+                            Lambda
+                            </label>
+                        </div>
 
-			<button type="button"
-				onClick={this.handleClick} >
-			{this.state.selectAll ? "Unselect all" : "Select all"}
-			</button>
+                        <div>
+                            <input
+                                name="record"
+                                type="checkbox"
+                                id="record"
+                                checked={this.state.record}
+                                onChange={this.handleInputChange} />
+                            <label htmlFor="record">
+                                Record
+                            </label>
+                        </div>
 
-			<br/>
+                        <div>
+                        <input
+                            name="concatenation"
+                            type="checkbox"
+                            id="concatenation"
+                            checked={this.state.concatenation}
+                            onChange={this.handleInputChange} />
+                        <label htmlFor="concatenation">
+                            Concatenation
+                        </label>
+                        </div>
 
-			<input
-			name="lambda"
-				type="checkbox"
-					checked={this.state.lambda}
-			onChange={this.handleInputChange} />
-			<label>
-			Lambda
-			</label>
+                    </div>
 
-			<br/>
+                    <div className="row-features-checkbox-2">
 
-			<input
-			name="tryWithResources"
-				type="checkbox"
-					checked={this.state.tryWithResources}
-			onChange={this.handleInputChange} />
-			<label>
-			Try With Resources
-			</label>
+                        <div>
+                        <input
+                            name="tryWithResources"
+                            type="checkbox"
+                            id="tryWithResources"
+                            checked={this.state.tryWithResources}
+                            onChange={this.handleInputChange} />
+                        <label htmlFor="tryWithResources">
+                        Try With Resources
+                        </label>
+                        </div>
 
-			<br/>
+                        <div>
+                        <input
+                            name="nestMates"
+                            type="checkbox"
+                            id="nestMates"
+                            checked={this.state.nestMates}
+                            onChange={this.handleInputChange} />
 
-			<input
-			name="concatenation"
-				type="checkbox"
-					checked={this.state.concatenation}
-			onChange={this.handleInputChange} />
-			<label>
-			Concatenation
-			</label>
+                        <label htmlFor="nestMates">
+                            Nest Mates
+                        </label>
+                        </div>
+                    </div>
+                </div>
 
-			<br/>
+                <div className="unSelect">
+                    <button type="button" onClick={this.handleClick} className="button-unSelect">
+                        {this.state.selectAll ? "Unselect all" : "Select all"}
+                    </button>
+                </div>
 
-			<input
-			name="record"
-				type="checkbox"
-					checked={this.state.record}
-			onChange={this.handleInputChange} />
-			<label>
-			Record
-			</label>
-
-			<br/>
-
-			<input
-			name="nestMates"
-				type="checkbox"
-					checked={this.state.nestMates}
-			onChange={this.handleInputChange} />
-			<label>
-			Nest Mates
-			</label>
-			</form>;
+			</div>;
 		}
 
 		if (this.state.any) {
@@ -146,35 +162,26 @@ class Features extends Component {
 		}
 
 		return(
-				<form>
+				<div className="features">
 
-				<label>
-				Info:
-					</label>
+                    <input
+                        name="info"
+                        type="checkbox"
+                        id="info"
+                        checked={this.state.info}
+                        onChange={this.handleInputChange}
+                    />
 
-				<input
-				name="info"
-					type="checkbox"
-						checked={this.state.info}
-				onChange={this.handleInputChange} />
+                    <label htmlFor="info" className="checkbox-main">
+                        Show me info about features detection
+                    </label>
 
-				{features}
+                    {features}
 
-				{force}
+                    {force}
 
-				</form>
+				</div>
 		);
 	}
 }
-
-//<input
-//name="selectAll"
-//type="checkbox"
-//checked={this.state.selectAll}
-//onChange={this.handleInputChange} />
-//<label>
-//Select/Unselect all
-//</label>
-
-
 export default Features;

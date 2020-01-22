@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css?family=Concert+One|Signika&display=swap');
+
+.features{
+    padding : 0px 50px;
+    font-family : 'Signika', sans-serif;
+}
+
+.features-details{
+    padding : 10px;
+    background-color : rgba(96, 163, 188,1.0);
+    color : #fff;
+    width : 80%;
+    margin : 0 auto;
+    border-radius : 10px;
+}
+
+.row-features-checkbox-1{
+    margin-top : 20px;
+    display : grid;
+    grid-template-columns : auto auto auto;
+}
+
+.row-features-checkbox-2{
+    margin-top : 20px;
+    display : grid;
+    grid-template-columns : auto auto;
+}
+
+.unSelect{
+    margin-top : 20px;
+    text-align : center;
+}
+
+.button-unSelect{
+    padding : 10px;
+    border-radius : 10px;
+    background-color : #fff;
+    border : none;
+    font-family : 'Signika', sans-serif;
+    cursor : pointer;
+}
+
+/* --------------------------------------------- *\
+                 CHECKBOX STYLE
+\* --------------------------------------------- */
+
+/*Checkboxes styles*/
+input[type="checkbox"] { display: none; }
+
+input[type="checkbox"] + label {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+input[type="checkbox"] + label:last-child { margin-bottom: 0; }
+
+
+input[type="checkbox"] + label:before {
+  content: '';
+  display: block;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #fff;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: .6;
+  -webkit-transition: all .12s, border-color .08s;
+  transition: all .12s, border-color .08s;
+}
+
+input[type="checkbox"]:checked + label:before {
+  width: 10px;
+  top: -5px;
+  left: 5px;
+  border-radius: 0;
+  opacity: 1;
+  border-top-color: transparent !important;
+  border-left-color: transparent !important;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.checkbox-main:before{
+    border : 1px solid #6cc0e5 !important;
+}
+
+@media screen and (max-width : 900px){
+
+    .features-details{
+        width : 100%;
+    }
+}

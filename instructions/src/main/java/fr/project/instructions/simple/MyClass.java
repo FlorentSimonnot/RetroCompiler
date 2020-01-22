@@ -3,6 +3,7 @@ package fr.project.instructions.simple;
 import fr.project.instructions.features.LambdaCollector;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -25,7 +26,7 @@ public class MyClass {
     private final String ownerClassName;
     private final int privacy;
     private int lineNumber;
-    private final String[] interfaces;
+    private String[] interfaces;
 
     /**
      * Creates a new MyClass.
@@ -63,6 +64,18 @@ public class MyClass {
      */
     public List<Field> getFields() {
         return fields;
+    }
+
+    public void addInterface(String name){
+        Objects.requireNonNull(name);
+        if(this.interfaces == null){
+            this.interfaces = new String[1];
+            this.interfaces[0] = name;
+        }else {
+            var copy = Arrays.copyOf(interfaces, interfaces.length + 1);
+            copy[copy.length - 1] = name;
+            this.interfaces = Arrays.copyOf(copy, copy.length);
+        }
     }
 
     public void addNestMember(String nestMate){

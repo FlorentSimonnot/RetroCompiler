@@ -100,8 +100,6 @@ public class App {
 					myWriter = new MyRecordClassWriter(myWriter);
 				}
 
-				//var myWriter = new MyWriter(cv.getMyClass(), version, warnings, options);
-
 				myWriter.createClass();
 				myWriter.writeFields();
 				myWriter.writeLambdaInnerClasses();
@@ -110,11 +108,10 @@ public class App {
 				myWriter.writeMethods();
 
 				if(warningsFound(warnings)){
-					System.out.println("We can't compile " + cv.getMyClass().getClassName() + ".java in java " + (version-44) + " because we found " + countWarningsFound(warnings) + " warning(s)");
-					warnings.forEach(WarningObserver::showWarning);
+					System.err.println("We can't compile " + cv.getMyClass().getClassName() + ".java in java " + (version-44) + " because we found " + countWarningsFound(warnings) + " warning(s)");
 				}
 				else{
-					String res = null;
+					String res;
 					try {
 						res = myWriter.createFile();
 						showEndMessage(options, res);
@@ -150,7 +147,7 @@ public class App {
 	private static WarningObserverFactory createWarningFactory(){
 		var observersFactory = new WarningObserverFactory();
 		observersFactory.register("try-with-resources", new WarningTryWithResourcesObserver());
-		observersFactory.register("nestMember", new WarningNestMemberObserver());
+		observersFactory.register("nestMates", new WarningNestMemberObserver());
 		observersFactory.register("concatenation", new WarningConcatenationObserver());
 		observersFactory.register("lambda", new WarningLambdaObserver());
 		observersFactory.register("record", new WarningRecordObserver());

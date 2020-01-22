@@ -65,10 +65,10 @@ public class FieldInstruction implements Instruction {
         if(version < VERSION){
             if(owner.contains("$") && !className.contains("$")){
                 if (opcode == Opcodes.GETFIELD) {
-                    mv.visitMethodInsn(Opcodes.INVOKESTATIC, owner, "accessGetter$"+name.toUpperCase(), "(L"+owner+";)"+descriptor, false);
+                    mv.visitMethodInsn(Opcodes.INVOKESTATIC, owner, "accessGetter"+name.toUpperCase(), "(L"+owner+";)"+descriptor, false);
                 }
                 if(opcode == Opcodes.PUTFIELD){
-                    mv.visitMethodInsn(Opcodes.INVOKESTATIC, owner, "accessSetter$"+name.toUpperCase(), "(L"+owner+";"+descriptor+")"+descriptor, false);
+                    mv.visitMethodInsn(Opcodes.INVOKESTATIC, owner, "accessSetter"+name.toUpperCase(), "(L"+owner+";"+descriptor+")"+descriptor, false);
                     if(Type.getType(descriptor) == Type.LONG_TYPE || Type.getType(descriptor) == Type.DOUBLE_TYPE)
                         mv.visitInsn(Opcodes.POP2);
                     else

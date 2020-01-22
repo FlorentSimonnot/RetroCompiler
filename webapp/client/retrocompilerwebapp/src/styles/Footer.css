@@ -31,7 +31,7 @@
     text-align : center;
 }
 
-img{
+.Footer img{
     float : right;
     margin-right : 20px;
 }
@@ -65,7 +65,7 @@ img{
         text-align : center
     }
 
-    img{
+    .Footer img{
         float : left;
         margin : 0 auto;
     }
@@ -74,8 +74,21 @@ img{
 
 @media screen and (max-height : 600px){
 
+    .top{
+        grid-template-columns : none;
+    }
+
+    table{
+        width : 100%;
+    }
+
     .right-container{
         display : none;
+    }
+
+    .left-container{
+        width : 100%;
+        text-align : center;
     }
 
 }

@@ -26,10 +26,10 @@ class Info extends Component{
 
 	render(){
 		return(
-				<form>
+				<div>
 
 				
-				</form>
+				</div>
 		);
 	}
 
