@@ -42,7 +42,7 @@ public class CalledLambdaInstruction implements Instruction {
      */
     @Override
     public void writeInstruction(int version, MethodVisitor mv, Instruction lastInstruction, String className)  {
-        if(version < lambdaCalled.getVersion()){
+        if(version < LambdaInstruction.VERSION){
             writeOldVersion(mv, lastInstruction, className);
             return;
         }
@@ -50,8 +50,7 @@ public class CalledLambdaInstruction implements Instruction {
     }
 
     private void writeOldVersion(MethodVisitor mv, Instruction lastInstruction, String className){
-        mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, className+"$MyLambda"+index, "myLambdaFunction$"+index, descriptor, false);
-        //mv.visitVarInsn(Opcodes.ISTORE, 0);
+        mv.visitMethodInsn(Opcodes.INVOKEINTERFACE, "interface"+className+"$MyLambda"+index, lambdaCalled.getName(), descriptor, true);
     }
 
     private void writeNewVersion(MethodVisitor mv, Instruction lastInstruction, String className){

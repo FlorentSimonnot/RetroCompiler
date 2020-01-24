@@ -44,7 +44,7 @@ public class LambdaCollector {
      */
     public boolean lambdaAlreadyExists(String name, String owner){
         for(LambdaInstruction l : lambdas.keySet()){
-            if(l.getOwnerClass().equals(owner) && l.getName().equals(name)){
+            if(l.getOwnerClass().substring(1).equals(owner) && l.getName().equals(name)){
                 return true;
             }
         }
@@ -59,7 +59,7 @@ public class LambdaCollector {
      */
     public Integer getLambdaIndex(String name, String owner){
         for(LambdaInstruction l : lambdas.keySet()){
-            if(l.getOwnerClass().equals(owner) && l.getName().equals(name)){
+            if(l.getOwnerClass().substring(1).equals(owner) && l.getName().equals(name)){
                 return lambdas.get(l);
             }
         }
@@ -74,7 +74,7 @@ public class LambdaCollector {
      */
     public LambdaInstruction getLambda(String name, String owner){
         for(LambdaInstruction l : lambdas.keySet()){
-            if(l.getOwnerClass().equals(owner) && l.getName().equals(name)){
+            if(l.getOwnerClass().substring(1).equals(owner) && l.getName().equals(name)){
                 return l;
             }
         }

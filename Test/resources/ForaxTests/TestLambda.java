@@ -18,8 +18,7 @@ class TestLambda {
   
   private static void testLambda3() {
     double d = 40.0;
-    double z = 30.0;
-    Function<Integer, Double> fun = x -> x + d + z;
+    Function<Integer, Double> fun = x -> x + d;
     System.out.println(fun.apply(2));
   }
   
@@ -46,7 +45,7 @@ class TestLambda {
   public static void main(String[] args) {
     testLambda();
     testLambda2();
-    testLambda3();
+    //testLambda3();
     
     testMethodRef();
     testMethodRef2();

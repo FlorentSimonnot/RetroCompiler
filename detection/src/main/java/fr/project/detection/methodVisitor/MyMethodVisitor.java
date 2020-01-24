@@ -192,6 +192,7 @@ public class MyMethodVisitor extends MethodVisitor{
                     "LAMBDA at " + ownerClass.getClassName() + "." + myMethod.getName() + myMethod.getDescriptor() + " (" + ownerClass.getSourceName() + ":"+ownerClass.getLineNumber()+ ") : lambda " + Utils.takeOwnerFunction(descriptor) + " capture [" + Utils.takeCapture(descriptor) + "]" + " calling " + bootstrap.split(" ")[0],
                     "lambda"));
 
+            System.err.println( ((Handle) bootstrapMethodArguments[1]).getName() + " vs " + bootstrapMethodArguments[2]);
             var myLambda = new LambdaInstruction(name, Utils.takeOwnerFunction(descriptor), descriptor, bootstrapMethodHandle, bootstrapMethodArguments);
             var index = lambdaCollector.addLambda(myLambda);
             addInstruction(new InstantiateLambdaInstruction(myLambda, index, ownerClass.getClassName()));

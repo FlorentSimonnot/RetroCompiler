@@ -48,7 +48,7 @@ public class InstantiateLambdaInstruction implements Instruction{
     }
 
     private void writeOldVersion(MethodVisitor mv, Instruction lastInstruction){
-        mv.visitMethodInsn(Opcodes.INVOKESTATIC, className+"$MyLambda"+index, "myLambdaFactory$"+index, "("+Utils.takeCapture(lambda.getDescriptor())+")L"+className+"$MyLambda"+index+";", false);
+        mv.visitMethodInsn(Opcodes.INVOKESTATIC, className+"$MyLambda"+index, "myLambdaFactory$"+index, "("+Utils.takeCapture(lambda.getDescriptor())+")Linterface"+className+"$MyLambda"+index+";", false);
     }
 
 

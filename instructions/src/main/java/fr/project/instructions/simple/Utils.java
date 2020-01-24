@@ -1,6 +1,7 @@
 package fr.project.instructions.simple;
 
 import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.Type;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,7 @@ public class Utils {
 	 * @return the text format for the function's name.
 	 */
     public static String takeOwnerFunction(String name){
-        var split = name.split("L");
+        var split = name.split("\\)");
         if(split.length != 2){
             throw new IllegalStateException();
         }
@@ -26,16 +27,20 @@ public class Utils {
     }
 
     /**
-     * Gets the arguments to be captured in a method handle.
+     * Gets a string which represents the arguments to be captured in a method handle.
      * @param name - the method's name
      * @return the text format that contains arguments to be captured.
      */
     public static String takeCapture(String name){
-        var split = name.split("L");
+        var split = name.split("\\)");
         if(split.length != 2){
             throw new IllegalStateException();
         }
         return split[0].replace("(", "").replace(")", "");
+    }
+
+    public static Type[] getCaptures(String descriptor){
+        return Type.getArgumentTypes(descriptor);
     }
 
     /**
@@ -77,6 +82,7 @@ public class Utils {
         switch(type){
             case "J" : return Opcodes.LRETURN;
             case "D" : return Opcodes.DRETURN;
+            case "B" :
             case "I" : return Opcodes.IRETURN;
             case "F" : return Opcodes.FRETURN;
             default : return Opcodes.ARETURN;

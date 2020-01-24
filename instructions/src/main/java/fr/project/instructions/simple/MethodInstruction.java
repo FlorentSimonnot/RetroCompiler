@@ -98,4 +98,5 @@ public class MethodInstruction implements Instruction {
     public boolean isAddSuppressedInvoke() {
         return name.equals("addSuppressed") && owner.equals("java/lang/Throwable");
     }
+
 }

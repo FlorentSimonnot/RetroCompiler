@@ -97,24 +97,26 @@ public class MyWriter implements Writer{
         cw.visitInnerClass(innerClass.getName(), innerClass.getOuterName(), innerClass.getInnerName(), innerClass.getAccess());
     }
 
+    private Method createLambdaMethod(LambdaInstruction lambdaInstruction){
+        return new Method(Opcodes.ACC_PUBLIC + Opcodes.ACC_ABSTRACT, lambdaInstruction.getName(),
+                Type.getMethodDescriptor(lambdaInstruction.getReturnType(), lambdaInstruction.getArgumentsTypeOfLambda()), null, true, null);
+
+    }
+
     private void writeLambdaFile(LambdaInstruction lambdaInstruction, int index) {
         var lambdaClass = new MyClass(Opcodes.ACC_PUBLIC+Opcodes.ACC_STATIC, myClass.getClassName()+"$MyLambda"+index, "java/lang/Object", null);
-        var methodLambda = new Method(Opcodes.ACC_PUBLIC + Opcodes.ACC_ABSTRACT, lambdaInstruction.getName(),
-                Type.getMethodDescriptor(lambdaInstruction.getReturnType(), lambdaInstruction.getArgumentsType()), null, true, null);
-
-        //System.err.println(Type.getMethodDescriptor(lambdaInstruction.getReturnType(), lambdaInstruction.getArgumentsType()));
+        var methodLambda = createLambdaMethod(lambdaInstruction);
 
         LambdaWriter.createInterface(lambdaClass);
         LambdaWriter.createFields(lambdaClass, lambdaInstruction);
         LambdaWriter.createConstructor(lambdaClass, lambdaInstruction);
         LambdaWriter.createLambdaFactory(lambdaClass, lambdaInstruction, myClass.getClassName(), index);
-        LambdaWriter.createLambdaCalledMethod(lambdaClass, methodLambda);
+        LambdaWriter.createLambdaCalledMethod(lambdaClass, methodLambda, lambdaInstruction, myClass.getClassName());
 
         var lambdaWriter = new MyWriter(lambdaClass, version, this.warningObservers, this.options);
         lambdaWriter.createClass();
 
         lambdaWriter.writeSourceFile(myClass.getClassName()+".java");
-        lambdaWriter.writeNestHost(myClass.getClassName());
 
         lambdaWriter.writeFields();
         lambdaWriter.writeConstructors();
@@ -124,7 +126,7 @@ public class MyWriter implements Writer{
             lambdaWriter.createFile();
 
             //Now write the interface file
-            var interfac = new MyInterface("interface"+myClass.getClassName()+"$MyLambda"+index, "java/lang/Object",Opcodes.ACC_ABSTRACT+Opcodes.ACC_PUBLIC, version);
+            var interfac = new MyInterface("interface"+myClass.getClassName()+"$MyLambda"+index, "java/lang/Object",Opcodes.ACC_ABSTRACT+Opcodes.ACC_PUBLIC+Opcodes.ACC_INTERFACE, version);
             interfac.addMethod(methodLambda);
             var writer = new InterfaceWriter(interfac);
             writer.createClass();
@@ -163,10 +165,9 @@ public class MyWriter implements Writer{
     public void writeMethods(){
         myClass.getMethods().forEach(this::writeMethod);
 
-        //Write access methods if is a inner class
-        if(myClass.getClassName().contains("$")){
+        //Write access methods if is a inner class but no a lambda class
+        if(myClass.getClassName().contains("$") && !myClass.getClassName().contains("MyLambda")){
             if(version < FieldInstruction.VERSION) {
-
                 if (options.forceIsDemanding()){
                     myClass.getFields().stream().filter(n -> !n.getName().contains("this")).forEach(this::writeAccessMethod);
                 }

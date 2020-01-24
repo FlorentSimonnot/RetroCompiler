@@ -102,12 +102,21 @@ public class LambdaInstruction {
     }
 
     /**
-     * Gets the lambda's arguments type.
+     * Gets the arguments type use in the method handle.
      * @return the lambda's arguments type
      */
     public Type[] getArgumentsType(){
         var method = (Handle) args[1];
         return Type.getArgumentTypes(method.getDesc());
+    }
+
+    public Type[] getArgumentsTypeOfLambda(){
+        return Type.getArgumentTypes(args[2].toString());
+    }
+
+    public Type getReturnTypeOfLambda(){
+        var method = (Handle) args[1];
+        return Type.getReturnType(method.getDesc());
     }
 
     /**
@@ -119,11 +128,7 @@ public class LambdaInstruction {
         return methodCalled.getName();
     }
 
-    /**
-     * Gets the owner class of the method that calls the lambda.
-     * @return the owner class of the method that class the lambda
-     */
-    public String getMethodCalledOwnerName(){
+    public String getMethodCalledOwner(){
         var methodCalled = (Handle) args[1];
         return methodCalled.getOwner();
     }
@@ -136,13 +141,6 @@ public class LambdaInstruction {
         return Type.getMethodDescriptor(getReturnType(), getArgumentsType());
     }
 
-    /**
-     * Gets the arguments type of the lambda.
-     * @return the arguemnts type of the lambda
-     */
-    Type[] getCapture(){
-        return Type.getArgumentTypes(descriptor);
-    }
 
     @Override
     public int hashCode() {
