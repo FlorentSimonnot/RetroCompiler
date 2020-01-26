@@ -13,14 +13,16 @@ class Target extends Component {
 		this.state = {
 			targetOption: false,
 			force: false,
-			targetVersion: '5',
 		};
 		this.handleChange = this.handleChange.bind(this);
 		this.handleInputChange = this.handleInputChange.bind(this);
+		
+//		test
+		this.handleForceChange = this.handleForceChange.bind(this);
 	}
 	
 	handleChange(event) {
-		this.setState({targetVersion: event.target.targetVersion});
+		this.props.onTargetVersionChange(event.target.value);
 	}
 	
 	handleInputChange(event) {
@@ -31,6 +33,16 @@ class Target extends Component {
 		this.setState({
 			[name]:value,
 		});
+		
+//		test
+		if (name === "targetOption") {
+			this.props.onTargetOptionChange(value);
+		}
+	}
+	
+//	test
+	handleForceChange(forceOption) {
+		this.props.onForceOptionChange(forceOption);
 	}
 
 
@@ -38,13 +50,16 @@ class Target extends Component {
 		const targetOption = this.state.targetOption;
 		let details;
 		
+//		test
+		const version = this.props.version;
+		
 		if(targetOption) {
 
             details = <div className="target-details">
 
                 <label>
                     Choose the target version:
-                    <select value={this.state.targetVersion} onChange={this.handleChange}>
+                    <select value={version} onChange={this.handleChange}>
                         <option value='5'>5</option>
                         <option value='6'>6</option>
                         <option value='7'>7</option>
@@ -58,7 +73,9 @@ class Target extends Component {
                 </label>
                 <br /><br/>
 
-                <Force />
+                <Force 
+                	onForceChange={this.handleForceChange}
+                />
 
             </div>
 

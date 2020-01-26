@@ -16,6 +16,9 @@ class File extends Component {
 		};
 		this.handleOptionChange = this.handleOptionChange.bind(this);
 		this.inputFile = this.inputFile.bind(this);
+		
+//		test
+		this.handleChange = this.handleChange.bind(this);
 	}
 
 	handleOptionChange(event, type) {
@@ -26,6 +29,7 @@ class File extends Component {
 				file: true,
 				directory: false,
 				jar : false,
+				input: "",
 			});
 		}
 		else if(name === "Directory"){
@@ -44,12 +48,20 @@ class File extends Component {
 		}
 	}
 
-	inputFile(selector : Files){
-	    console.log(selector)
+	inputFile(selector){
+	    console.log(selector);
+	}
+	
+//	test
+	handleChange(event) {
+		this.props.onInputFileChange(event.target.value);
 	}
 
 	render() {
 
+//		test
+		const inputFile = this.props.inputFile;
+		
 	    let f = "file";
 	    if(this.state.file === true) f = "file";
 	    if(this.state.directory === true) f = "directory";
@@ -64,7 +76,6 @@ class File extends Component {
 	    if(this.state.file === true) classname = "file-class"
 	    if(this.state.directory === true) classname = "directory-class"
 	    if(this.state.jar === true) classname = "jar-class"
-
 
 		return(
 				<div>
@@ -122,20 +133,11 @@ class File extends Component {
 
 				    </div>
 
-                    {/*<div>
-                        Input type:
-                        <label>
-                        <input id="FileJar" name="File/Jar" type="radio" checked={this.state.fileOrJar} onChange={this.handleOptionChange} />
-                        File/Jar
-                        </label>
-
-                        <label>
-                        <input id="Directory" name="Directory" type="radio" checked={this.state.directory} onChange={this.handleOptionChange} />
-                        Directory
-                        </label>
-                    </div>*/}
-
-                    {/*chooseFile*/}
+                    <label>
+                    Put the full path of the file you want to parse
+                    <br/>
+                    <textarea value={inputFile} onChange={this.handleChange} />
+                    </label>
 
 				</div>
 		);

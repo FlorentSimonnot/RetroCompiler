@@ -3,7 +3,6 @@
  */
 
 import React, {Component} from 'react';
-import Force from './Force.js';
 import "../styles/Features.css"
 
 class Features extends Component {
@@ -11,7 +10,7 @@ class Features extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-				info: false,
+				isInfoSelected: false,
 				selectAll: true,
 				lambda: true,
 				tryWithResources: true,
@@ -21,9 +20,13 @@ class Features extends Component {
 		};
 		this.handleInputChange = this.handleInputChange.bind(this);
 		this.handleClick = this.handleClick.bind(this);
+		
+//		test
+		this.handleInfoChange = this.handleInfoChange.bind(this);
 	}
-
-	handleInputChange(event) {
+	
+//	test
+	handleInfoChange(event) {
 		const target = event.target;
 		const value = target.type === "checkbox" ? target.checked : target.value;
 		const name = target.name;
@@ -31,16 +34,46 @@ class Features extends Component {
 		this.setState({
 			[name]:value,
 		});
+		
+//		test
+		this.props.onInfoChange(event.target.checked);
+	}
+	
+	handleInputChange(event) {
+		const target = event.target;
+		const value = target.type === "checkbox" ? target.checked : target.value;
+		const name = target.name;
+		
+
+		this.setState({
+			[name]:value,
+		});
+		
+//		test
+		this.checkAny();
+//		
+		const features = this.state;
+//		
+		this.props.onAnyFeatureChange(
+				features.lambda,
+				features.tryWithResources,
+				features.concatenation,
+				features.record,
+				features.nestMates);
 	}
 
 	handleClick(event) {
 		const selectAll = this.state.selectAll;
 		
+//		test
 		this.setState({
 			selectAll: !selectAll,
 		});
 		
 		this.checkAll();
+		
+//		test
+		this.props.onAllFeaturesChange(selectAll);
 	}
 
 	checkAll() {
@@ -48,6 +81,7 @@ class Features extends Component {
 
 		if (!selectAll) {
 			this.setState({
+				any: true,
 				lambda: true,
 				tryWithResources: true,
 				concatenation: true,
@@ -57,6 +91,7 @@ class Features extends Component {
 		}
 		else {
 			this.setState({
+				any: false,
 				lambda: false,
 				tryWithResources: false,
 				concatenation: false,
@@ -65,14 +100,32 @@ class Features extends Component {
 			});
 		}
 	}
+	
+//	test
+	checkAny() {
+		const features = this.state;
+		
+		if (features.lambda ||
+				features.tryWithResources ||
+				features.concatenation ||
+				features.record ||
+				features.nestMates) {
+			this.setState({
+				any: true,
+			});
+		}
+		else {
+			this.setState({
+				any: false,
+			});
+		}
+	}
 
 	render() {
-		const info = this.state.info;
 		let features;
 		let force;
 
-		if (info) {
-			features = 
+		features = 
             <div className="features-details">
                 <div className="features-checkbox">
                     <label>
@@ -153,23 +206,27 @@ class Features extends Component {
                         {this.state.selectAll ? "Unselect all" : "Select all"}
                     </button>
                 </div>
+                
+                <div className="unSelect">
+                <button type="button" onClick={this.handleInputChange} className="button-unSelect">
+                    Confirm
+                </button>
+            </div>
 
 			</div>;
-		}
-
-		if (this.state.any) {
-			force = <Force />
-		}
 
 		return(
 				<div className="features">
 
                     <input
-                        name="info"
+                        name="isInfoSelected"
                         type="checkbox"
                         id="info"
-                        checked={this.state.info}
-                        onChange={this.handleInputChange}
+                        value="info"
+                        checked={this.state.isInfoSelected}
+                    
+//                    test
+                        onChange={this.handleInfoChange}
                     />
 
                     <label htmlFor="info" className="checkbox-main">

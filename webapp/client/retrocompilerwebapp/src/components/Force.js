@@ -8,23 +8,22 @@ class Force extends Component{
 
 	constructor(props) {
 		super(props);
-		this.state = {
-				force: false,	
-		};
 		this.handleInputChange = this.handleInputChange.bind(this);
 	}
 
 	handleInputChange(event) {
 		const target = event.target;
 		const value = target.type === "checkbox" ? target.checked : target.value;
-		const name = target.name;
-
-		this.setState({
-			[name]:value,
-		});
+		
+//		test
+		this.props.onForceChange(value);
 	}
 
 	render(){
+		
+//		test
+		const force = this.props.force;
+		
 		return(
 				<div>
 
@@ -32,7 +31,7 @@ class Force extends Component{
                         name="force"
                         type="checkbox"
                         id="force"
-                        checked={this.state.force}
+                        checked={force}
                          onChange={this.handleInputChange} />
 
                          <label htmlFor="force">
