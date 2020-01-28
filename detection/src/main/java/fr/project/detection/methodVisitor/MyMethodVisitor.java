@@ -10,10 +10,7 @@ import fr.project.instructions.simple.*;
 import fr.project.detection.observers.FeatureObserver;
 import org.objectweb.asm.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 
@@ -34,6 +31,7 @@ public class MyMethodVisitor extends MethodVisitor{
     private boolean closeCalled = false;
     private TryCatchBlock tryCatchBlock = null;
     private final LambdaCollector lambdaCollector;
+    private final List<LambdaInstruction> lambdaSaver = new LinkedList<>();
 
     /**
 	 * Creates a new MyMethodVisitor.
@@ -165,10 +163,10 @@ public class MyMethodVisitor extends MethodVisitor{
 		super.visitJumpInsn(opcode, label);
 	}
 
-	private void getInstructionCalledBeforeConcatenation(Object... args){
+	private void getInstructionCalledBeforeConcatenation(String descriptor, Object... args){
 		var arguments = (String) args[0];
 		var listFormat = Utils.createListOfConstantForConcatenation(arguments);
-		myMethod.createConcatenationInstruction(Utils.numberOfOccurrence(listFormat, "arg"), listFormat);
+		myMethod.createConcatenationInstruction(Utils.numberOfOccurrence(listFormat, "arg"), listFormat, descriptor);
 	}
 
 	/**
@@ -183,7 +181,7 @@ public class MyMethodVisitor extends MethodVisitor{
             observers.forEach(o -> o.onFeatureDetected(
                     "CONCATENATION at " + ownerClass.getClassName() + "." + myMethod.getName() + myMethod.getDescriptor() + " (" + ownerClass.getSourceName() + ":"+ownerClass.getLineNumber()+") : pattern " + bootstrapMethodArguments[0].toString().replace("\u0001", "%1")
                     , "concatenation"));
-            getInstructionCalledBeforeConcatenation(bootstrapMethodArguments);
+            getInstructionCalledBeforeConcatenation(descriptor, bootstrapMethodArguments);
         }
 
         else if(bootstrapMethodHandle.getName().equals("metafactory")){
@@ -196,6 +194,7 @@ public class MyMethodVisitor extends MethodVisitor{
             var myLambda = new LambdaInstruction(name, Utils.takeOwnerFunction(descriptor), descriptor, bootstrapMethodHandle, bootstrapMethodArguments);
             var index = lambdaCollector.addLambda(myLambda);
             addInstruction(new InstantiateLambdaInstruction(myLambda, index, ownerClass.getClassName()));
+            lambdaSaver.add(myLambda);
         }
 
         else{
@@ -238,15 +237,19 @@ public class MyMethodVisitor extends MethodVisitor{
                     , name));
         }
 
-        if(opcode == Opcodes.INVOKEINTERFACE && owner.startsWith("java/util/function")){
-            if(lambdaCollector.lambdaAlreadyExists(name, owner)){
-                var myLambda = lambdaCollector.getLambda(name, owner);
-                var index = lambdaCollector.getLambdaIndex(name, owner);
-                addInstruction(new CalledLambdaInstruction(myLambda, descriptor, index, ownerClass.getClassName()));
-            }
-            else{
-                addInstruction(new MethodInstruction(opcode, owner, name, descriptor, isInterface));
-            }
+        //InvokeInterface ==> Look if its a lambda calling
+        if(opcode == Opcodes.INVOKEINTERFACE){
+			if(lambdaSaver.size() > 0) {
+				var index = lambdaSaver.size() - 1;
+				var myLambda = lambdaSaver.get(index);
+				if(lambdaCollector.contains(myLambda.getName(), myLambda.getOwnerClass())){
+					addInstruction(new CalledLambdaInstruction(myLambda, descriptor, lambdaCollector.getIndex(), ownerClass.getClassName()));
+					lambdaSaver.remove(index);
+				}
+			}
+			else{
+				addInstruction(new MethodInstruction(opcode, owner, name, descriptor, isInterface));
+			}
         }else{
             addInstruction(new MethodInstruction(opcode, owner, name, descriptor, isInterface));
         }
@@ -359,6 +362,7 @@ public class MyMethodVisitor extends MethodVisitor{
 	 */
 	@Override
 	public void visitEnd() {
+		myMethod.printInstructions();
 		methods.add(myMethod);
 		super.visitEnd();
 	}

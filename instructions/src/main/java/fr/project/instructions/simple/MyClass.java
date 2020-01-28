@@ -208,6 +208,15 @@ public class MyClass {
         return sourceName;
     }
 
+    public Method getMethodByName(String name, String descriptor){
+        for(Method m : methods){
+            if(m.getName().equals(name) && m.getDescriptor().equals(descriptor)){
+                return m;
+            }
+        }
+        throw new IllegalStateException("No method with this name and/or this descriptor");
+    }
+
     /**
      * Tests if the class's owner class is a record.
      * @return true if the class's owner class is a record, false if not

@@ -42,7 +42,7 @@ public class TryWithResourcesInstruction implements Instruction {
      * @return false
      */
     @Override
-    public boolean isAloadInstruction() {
+    public boolean isLoadInstruction() {
         return false;
     }
 }

@@ -3,6 +3,8 @@ package fr.project.instructions.simple;
 import org.objectweb.asm.Handle;
 import org.objectweb.asm.MethodVisitor;
 
+import java.util.Optional;
+
 /**
  * 
  * A class that allows to detect and write an invoke dynamic instruction of a .class file.
@@ -41,5 +43,20 @@ public class InvokeDynamicInstruction implements Instruction {
     @Override
     public void writeInstruction(int version, MethodVisitor mv, Instruction lastInstruction, String className)  {
         mv.visitInvokeDynamicInsn(name, descriptor, bootstrapMethodHandle, bootstrapMethodArguments);
+    }
+
+    @Override
+    public Optional<String> getName() {
+        return Optional.of(name);
+    }
+
+    @Override
+    public Optional<String> getOwner() {
+        return Optional.of(bootstrapMethodArguments[0].toString());
+    }
+
+    @Override
+    public boolean isInvokeDynamicInstruction() {
+        return true;
     }
 }

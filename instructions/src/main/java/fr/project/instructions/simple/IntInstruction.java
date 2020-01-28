@@ -2,6 +2,8 @@ package fr.project.instructions.simple;
 
 import org.objectweb.asm.MethodVisitor;
 
+import java.util.Optional;
+
 /**
  * 
  * A class that allows to detect and write an int instruction of a .class file.
@@ -27,8 +29,8 @@ public class IntInstruction implements Instruction {
      * Gets the operand of the IntInstruction.
      * @return the operand of the IntInstruction
      */
-    public int getVar() {
-        return operand;
+    public Optional<Integer> getVar() {
+        return Optional.of(operand);
     }
 
     /**

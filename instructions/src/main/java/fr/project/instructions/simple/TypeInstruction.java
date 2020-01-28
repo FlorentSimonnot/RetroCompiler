@@ -36,7 +36,7 @@ public class TypeInstruction implements Instruction {
      * Tests if the type instruction is an load instruction.
      */
     @Override
-    public boolean isAloadInstruction() {
+    public boolean isLoadInstruction() {
         return opcode == Opcodes.ALOAD || opcode == Opcodes.ILOAD || opcode == Opcodes.DLOAD || opcode == Opcodes.LLOAD;
     }
 

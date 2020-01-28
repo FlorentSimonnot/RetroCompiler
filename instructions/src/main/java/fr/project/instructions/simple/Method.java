@@ -1,6 +1,7 @@
 package fr.project.instructions.simple;
 
 import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
 
 import java.util.*;
 
@@ -12,7 +13,7 @@ import java.util.*;
  *
  */
 public class Method {
-	private final int access;
+	private int access;
 	private final String name;
 	private final String descriptor;
 	private final String signature;
@@ -42,6 +43,10 @@ public class Method {
 	/* ********************************** *\
                     GETTERS
     \* ********************************** */
+
+	public void setAccess(int access){
+		this.access = access;
+	}
 
 	/**
 	 * Gets the method's name.
@@ -105,11 +110,39 @@ public class Method {
 	 * Sets the field instructions with a new concatenation of all Instruction.
 	 * @param nArgs - a number of arguments
 	 * @param format - the text format
+	 * @param descriptor - the descriptor of the makeConcat
 	 */
-	public void createConcatenationInstruction(int nArgs, List<String> format){
-		var map = instructions.createConcatenationInstruction(nArgs, format);
+	public void createConcatenationInstruction(int nArgs, List<String> format, String descriptor){
+		var map = instructions.createConcatenationInstruction(nArgs, format, descriptor);
 		instructions.clear();
 		instructions.addAll(map);
+	}
+
+	public boolean isPrivateMethod(){
+		return (access & Opcodes.ACC_PRIVATE) != 0;
+	}
+
+	public boolean isStaticMethod(){
+		return (access & Opcodes.ACC_STATIC) != 0;
+	}
+
+	private boolean InvokeDynamicAccordingNameAndClassExists(MyClass myClass, String name){
+		return instructions.containsInvokeDynamicInstructionAccordingToAName(myClass, name);
+	}
+
+	public boolean haveInvokeDynamicInstructionForEqualsMethod(MyClass myClass){
+		Objects.requireNonNull(myClass);
+		return InvokeDynamicAccordingNameAndClassExists(myClass, "equals");
+	}
+
+	public boolean haveInvokeDynamicInstructionForHashCodeMethod(MyClass myClass){
+		Objects.requireNonNull(myClass);
+		return InvokeDynamicAccordingNameAndClassExists(myClass, "hashCode");
+	}
+
+	public boolean haveInvokeDynamicInstructionForToStringMethod(MyClass myClass){
+		Objects.requireNonNull(myClass);
+		return InvokeDynamicAccordingNameAndClassExists(myClass, "toString");
 	}
 
 	/**

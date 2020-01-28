@@ -2,6 +2,9 @@ package fr.project.instructions.simple;
 
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.Type;
+
+import java.util.Optional;
 
 /**
  * 
@@ -37,17 +40,7 @@ public class MethodInstruction implements Instruction {
      * Gets the method instruction's type.
      */
     public String getType() {
-        switch(opcode){
-            case Opcodes.ILOAD : return "(I)";
-            case Opcodes.LLOAD: return "(J)";
-            case Opcodes.DLOAD: return "(D)";
-            case Opcodes.ALOAD : return "(Ljava/lang/Object;)";
-            case Opcodes.INVOKEVIRTUAL: {
-                var split = descriptor.split("\\)");
-                return "("+split[1]+")";
-            }
-            default : return "()";
-        }
+        return "("+Type.getReturnType(descriptor).toString()+")";
     }
 
 
@@ -60,7 +53,7 @@ public class MethodInstruction implements Instruction {
      * Tests if the method instruction is an aload instruction.
      */
     @Override
-    public boolean isAloadInstruction() {
+    public boolean isLoadInstruction() {
         return opcode == Opcodes.ALOAD;
     }
 
@@ -99,4 +92,16 @@ public class MethodInstruction implements Instruction {
         return name.equals("addSuppressed") && owner.equals("java/lang/Throwable");
     }
 
+    @Override
+    public Optional<String> getName(){return Optional.of(name);}
+
+    @Override
+    public Optional<String> getOwner() {
+        return Optional.of(owner);
+    }
+
+    @Override
+    public boolean isMethodInstruction() {
+        return true;
+    }
 }

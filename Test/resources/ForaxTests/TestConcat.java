@@ -20,7 +20,7 @@ int lo = 3;
 
 	private String test33P(String s){
 		String c = s.concat("a").concat("b");
-		System.out.println(lo+" * "+a+" = "+3L+" / "+3.0 + " " + new TestConcat().toString() + " " + c.concat("c"));
+		System.out.println(lo+" * "+a+" = "+3L+" / "+3.0 + " " + new TestConcat() + " or " + new TestConcat().toString() + " " + c.concat("c") + " / " + this);
 		return c;
 	}
 
@@ -36,12 +36,12 @@ int lo = 3;
 	return lo + " * " + a;
 }
 
-private static String testConcatStringBuilder(){
-   StringBuilder sb = new StringBuilder("record[");
-	sb.append("]");	
-	String res = sb.toString();
-return res;
-}
+    private static String testConcatStringBuilder(){
+       StringBuilder sb = new StringBuilder("record[");
+        sb.append("]");
+        String res = sb.toString();
+        return res;
+    }
   
   private static void testConcat2() {
     long val1 = 5L;
@@ -62,11 +62,12 @@ return res;
     testConcat();
     testConcat2();
     testConcat3();
-TestConcat obj = new TestConcat();
+    TestConcat obj = new TestConcat();
 	String res = obj.a;
 	System.out.println(obj.getA());
 	System.out.println(obj.test33(33));
-System.out.println(obj.test33P("Siiis"));
-	
+    System.out.println(obj.test33P("Siiis"));
+	StringBuilder sb = new StringBuilder();
+	sb.append(obj.getA()).append(obj.test33(1));
   }
 }

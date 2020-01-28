@@ -42,7 +42,7 @@ public class MyVisitor {
      * @return true if all FeatureObserver are added successfully, false if not
      */
     public boolean addAll(List<FeatureObserver> observers){
-        return addAll(observers);
+        return this.observers.addAll(observers);
     }
 
     /**

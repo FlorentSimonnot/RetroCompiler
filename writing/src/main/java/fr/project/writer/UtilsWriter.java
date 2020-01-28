@@ -1,9 +1,6 @@
 package fr.project.writer;
 
-import fr.project.instructions.simple.Method;
-import fr.project.instructions.simple.MethodInstruction;
-import fr.project.instructions.simple.NopInstruction;
-import fr.project.instructions.simple.TypeInstruction;
+import fr.project.instructions.simple.*;
 import fr.project.optionsCommand.Option;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
@@ -41,6 +38,7 @@ class UtilsWriter {
             case "Boolean" :
             case "Short" :
             case "Byte" :
+            case "Object" :
             case "Integer" : return true;
             default: return false;
         }
@@ -48,7 +46,7 @@ class UtilsWriter {
 
     //From primitive type to wrapper type
     private static void box(Method method, Type src, Type dst){
-        var owner = "ljava/lang/";
+        var owner = "Ljava/lang/";
         switch (src.toString()){
             case "J" : owner = owner + "Long"; break;
             case "I" : owner = owner + "Integer"; break;
@@ -60,11 +58,15 @@ class UtilsWriter {
             case "S" : owner = owner + "Short"; break;
             default: throw new IllegalArgumentException(src.toString() + " is not a primitive type");
         }
-        method.addInstruction(new MethodInstruction(Opcodes.INVOKESTATIC, owner, "valueOf", "("+src.toString()+")"+owner+";", false));
+        method.addInstruction(new MethodInstruction(Opcodes.INVOKESTATIC, owner.substring(1), "valueOf", "("+src.toString()+")"+owner+";", false));
     }
 
     //From wrapper type to primitive type
     private static void unBox(Method method, Type src, Type dst){
+        if(src.getDescriptor().equals("Ljava/lang/Object;")){
+            method.addInstruction(new TypeInstruction(Opcodes.CHECKCAST, dst.getInternalName()));
+            return;
+        }
         var methodName = "";
         var returnDescriptor = "";
         switch (src.toString().replace(";", "")){
@@ -78,11 +80,12 @@ class UtilsWriter {
             case "Ljava/lang/Short" : methodName = "short"; returnDescriptor = "S"; break;
             default: throw new IllegalArgumentException(src.toString() + " is not a wrapper type");
         }
-        method.addInstruction(new MethodInstruction(Opcodes.INVOKESTATIC, src.toString().substring(1, src.toString().length()-1), methodName+"Value", "()"+returnDescriptor+";", false));
+        //System.err.println(src + " vs " + dst);
+        method.addInstruction(new MethodInstruction(Opcodes.INVOKEVIRTUAL, src.toString().substring(1, src.toString().length()-1), methodName+"Value", "()"+returnDescriptor, false));
     }
 
     static void cast(Method method, Type a, Type b){
-        System.err.println(a + " " + b);
+        //System.err.println(method.getName() + " " + a.toString() + " vs " + b.toString());
         if(isPrimitiveType(a) && isWrappedType(b)){
             box(method, a, b);
         }
@@ -98,6 +101,13 @@ class UtilsWriter {
         else{
             method.addInstruction(new TypeInstruction(Opcodes.CHECKCAST, b.getInternalName()));
         }
+    }
+
+    static int load(Method method, int opcode, int pos){
+        method.addInstruction(new VarInstruction(opcode, pos));
+        if(opcode == Opcodes.DLOAD || opcode == Opcodes.LLOAD)
+            return pos + 2;
+        return pos + 1;
     }
 
 }

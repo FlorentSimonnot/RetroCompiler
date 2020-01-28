@@ -2,9 +2,12 @@ package fr.project.instructions.simple;
 
 import fr.project.instructions.features.ConcatenationInstruction;
 import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.Type;
 
 import java.util.*;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 /**
  * 
@@ -111,29 +114,95 @@ public class InstructionsCollector {
      * @param format - a text format
      * @return a new list of Instruction
      */
-    List<Instruction> createConcatenationInstruction(int nArgs, List<String> format) {
+    List<Instruction> createConcatenationInstruction(int nArgs, List<String> format, String descriptor) {
         var newCollector = new InstructionsCollector();
         var concatCollector = new InstructionsCollector();
         var count = 0;
+        var types = Type.getArgumentTypes(descriptor);
+        var currentTypeIndex = types.length-1;
+        var previousInstruction = instructions.get(instructions.size()-1);
 
-        for(var i = size()-1; i >= 0; i--){
+        var i = size()-1;
+        System.err.println(nArgs);
+        for(; i >= 0; i--){
             var e = instructions.get(i);
+            var instructionsType = e.getType().replace("(", "").replace(")", "");
             if(count < nArgs){
-                if(e.isAloadInstruction() || e.isNew()){
-                    count++;
+                System.err.println(count + " " + e);
+                if(e.isLoadInstruction() && !previousInstruction.isGetFieldInstruction()){
+                    if(!types[currentTypeIndex].toString().contains("L")){
+                        if(instructionsType.equals(types[currentTypeIndex].toString())){
+                            count++;
+                            currentTypeIndex--;
+                        }
+                    }
+                    else{
+                        if(instructionsType.equals("Ljava/lang/Object;")){
+                            count++;
+                            currentTypeIndex--;
+                        }
+                    }
+                }
+                else if(e.isMethodInstruction()) {
+                    if(e.getName().isPresent()) {
+                        if (!e.getName().get().equals("<init>")) {
+                            if (instructionsType.equals(types[currentTypeIndex].toString())) {
+                                count++;
+                                currentTypeIndex--;
+                            }
+                        }
+                        else{
+                            if(e.getOwner().isPresent()) {
+                                if (("L"+e.getOwner().get()+";").equals(types[currentTypeIndex].toString())) {
+                                    count++;
+                                    currentTypeIndex--;
+                                }
+                            }
+                        }
+                    }
+                }
+                else if(e.isGetFieldInstruction()){
+                    if(instructionsType.equals(types[currentTypeIndex].toString())){
+                        count++;
+                        currentTypeIndex--;
+                    }
                 }
                 concatCollector.add(e);
             }
             else{
-                newCollector.add(e);
+                if(concatCollector.getInstruction(concatCollector.size()-1).isGetFieldInstruction())
+                    concatCollector.add(e);
+                else
+                    newCollector.add(e);
             }
+            previousInstruction = e;
         }
 
         var res = new InstructionsCollector();
         Collections.reverse(concatCollector.instructions);
         Collections.reverse(newCollector.instructions);
         res.addAll(newCollector.instructions);
-        res.add(new ConcatenationInstruction(concatCollector, format));
+        format = format.stream().filter(f -> f.length() > 0).collect(Collectors.toList());
+        res.add(new ConcatenationInstruction(concatCollector, format, types));
         return res.instructions;
     }
+
+    public boolean containsInvokeDynamicInstructionAccordingToAName(MyClass myClass, String name){
+        Objects.requireNonNull(myClass);
+        Objects.requireNonNull(name);
+        for (Instruction instruction : instructions) {
+            if(instruction.isInvokeDynamicInstruction()){
+                if(instruction.getName().isPresent()){
+                    if(name.equals(instruction.getName().get())){
+                        if(instruction.getOwner().isPresent()){
+                            var className = instruction.getOwner().get();
+                            return className.substring(1, className.length()-1).equals(myClass.getClassName());
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
 }

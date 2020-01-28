@@ -1,5 +1,6 @@
 package fr.project.instructions.features;
 
+import java.util.Arrays;
 import java.util.StringJoiner;
 import fr.project.instructions.simple.Instruction;
 import fr.project.instructions.simple.InstructionsCollector;
@@ -9,6 +10,7 @@ import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 
@@ -22,6 +24,7 @@ import java.util.List;
 public class ConcatenationInstruction implements Instruction {
     private static final int VERSION = Opcodes.V9;
     private final InstructionsCollector instructions;
+    private final Type[] arguments;
     private final List<String> format;
 
     /**
@@ -29,9 +32,10 @@ public class ConcatenationInstruction implements Instruction {
      * @param instructions - the instructions block attached to this concatenation instruction
      * @param format - the format of the line corresponding to the concatenation code block
      */
-    public ConcatenationInstruction(InstructionsCollector instructions, List<String> format){
+    public ConcatenationInstruction(InstructionsCollector instructions, List<String> format, Type[] arguments){
         this.instructions = instructions;
         this.format = format;
+        this.arguments = arguments;
     }
 
     /**
@@ -63,20 +67,67 @@ public class ConcatenationInstruction implements Instruction {
         mv.visitTypeInsn(Opcodes.NEW, type.getInternalName());
         mv.visitInsn(Opcodes.DUP);
         mv.visitMethodInsn(Opcodes.INVOKESPECIAL, type.getInternalName(), "<init>", "()V", false);
+
         var list = splitInstructions();
         var li = lastInstruction;
         var index = 0;
+
+        /*System.err.println("size of list " + list.size());
+        list.forEach(c -> {
+            System.err.println(c);
+            System.err.println("-----------");
+        });
+        System.err.println("*******************");*/
+
         for(String f : format){
             if(f.equals("arg")){
                 var instructionsList = list.get(index);
-                for(var i = 0; i < instructionsList.size(); i++){
+                var i = 0;
+
+                for(i = 0; i < instructionsList.size(); i++){
                     instructionsList.getInstruction(i).writeInstruction(version, mv, li, className);
                     li = instructionsList.getInstruction(i);
                 }
-                mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, type.getInternalName(), "append", li.getType() + "Ljava/lang/StringBuilder;", false);
+                //li.writeInstruction(version, mv, li, className);
+
+                //System.err.println("instruction : " + li + " type " + li.getType());
+                System.err.println(li);
+
+                if(li.isMethodInstruction()){
+                    if(li.getName().isPresent() && li.getOwner().isPresent()){
+                        if(li.getName().get().equals("<init>")){
+                            mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, type.getInternalName(), "append", "(Ljava/lang/Object;)" + "Ljava/lang/StringBuilder;", false);
+                        }
+                        else{
+                            mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, type.getInternalName(), "append", li.getType() + "Ljava/lang/StringBuilder;", false);
+                        }
+                    }
+                }
+                else{
+                    //have to call toString method on the object
+                    if(li.getType().contains("L")
+                            && !li.getType().substring(1, li.getType().length()-2).equals("Ljava/lang/Object")
+                            && !li.getType().substring(1, li.getType().length()-2).equals("Ljava/lang/String")){
+                        mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, li.getType().substring(2, li.getType().length()-2),  "toString", "()Ljava/lang/String;", false);
+                        mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, type.getInternalName(), "append", "(Ljava/lang/String;)" + "Ljava/lang/StringBuilder;", false);
+                    }
+                    else if(li.getType().substring(1, li.getType().length()-2).equals("Ljava/lang/Object")){
+                        mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, type.getInternalName(), "append", "(Ljava/lang/Object;)" + "Ljava/lang/StringBuilder;", false);
+                    }
+                    //Box to java/lang/Byte for have toStringMethod
+                    else if(li.getType().equals("(B)")){
+                        mv.visitMethodInsn(Opcodes.INVOKESTATIC, "java/lang/Byte", "valueOf", "(B)Ljava/lang/Byte;", false);
+                        mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Byte",  "toString", "()Ljava/lang/String;", false);
+                        mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(Ljava/lang/String;)Ljava/lang/StringBuilder;", false);
+                    }
+                    else {
+                        mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, type.getInternalName(), "append", li.getType() + "Ljava/lang/StringBuilder;", false);
+                    }
+                }
                 index++;
             }
             else{
+                System.err.println("format " + f);
                 mv.visitLdcInsn(f);
                 mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, type.getInternalName(), "append", "(Ljava/lang/String;)Ljava/lang/StringBuilder;", false);
                 li = new MethodInstruction(Opcodes.INVOKEVIRTUAL, type.getInternalName(), "append", "(Ljava/lang/String;)Ljava/lang/StringBuilder;", false);
@@ -88,23 +139,89 @@ public class ConcatenationInstruction implements Instruction {
     private List<InstructionsCollector> splitInstructions(){
         var list = new ArrayList<InstructionsCollector>();
         var collector = new InstructionsCollector();
+        var currentTypeIndex = 0;
+
         for(var i = 0; i < instructions.size()-1; i++){
             var instruction = instructions.getInstruction(i);
-            if(instruction.isAloadInstruction() || instruction.isNew()){
-                if(collector.size() > 0){
-                    list.add(collector);
-                    collector = new InstructionsCollector();
-                    collector.add(instruction);
+
+            var type = instruction.getType().substring(1, instruction.getType().length()-1);
+            //System.err.println(instruction + " type " + type);
+
+            if(currentTypeIndex < arguments.length) {
+                if (instruction.isLoadInstruction() && !instructions.getInstruction(i + 1).isGetFieldInstruction()) {
+                    if (!arguments[currentTypeIndex].toString().contains("L")) {
+                        if (type.equals(arguments[currentTypeIndex].toString())) {
+                            collector.add(instruction);
+                            if (collector.size() > 0) {
+                                list.add(collector);
+                                collector = new InstructionsCollector();
+                            }
+                            currentTypeIndex++;
+                        } else {
+                            collector.add(instruction);
+                        }
+                    } else {
+                        if (type.equals("Ljava/lang/Object;")){
+                            collector.add(instruction);
+                            if (collector.size() > 0) {
+                                list.add(collector);
+                                collector = new InstructionsCollector();
+                            }
+                            currentTypeIndex++;
+                        } else {
+                            collector.add(instruction);
+                        }
+                    }
                 }
-                else{
-                    collector.add(instruction);
+                else if (instruction.isMethodInstruction()) {
+                    if (instruction.getName().isPresent()) {
+                        if (!instruction.getName().get().equals("<init>")) {
+                            if (type.equals(arguments[currentTypeIndex].toString())) {
+                                collector.add(instruction);
+                                if (collector.size() > 0) {
+                                    list.add(collector);
+                                    collector = new InstructionsCollector();
+                                }
+                                currentTypeIndex++;
+                            } else {
+                                collector.add(instruction);
+                            }
+                        } else {
+                            if (instruction.getOwner().isPresent()) {
+                                if (("L" + instruction.getOwner().get() + ";").equals(arguments[currentTypeIndex].toString())) {
+                                    collector.add(instruction);
+                                    if (collector.size() > 0) {
+                                        list.add(collector);
+                                        collector = new InstructionsCollector();
+                                    }
+                                    currentTypeIndex++;
+                                }
+                            } else {
+                                collector.add(instruction);
+                            }
+                        }
+                    }
+                }
+                else if (instruction.isGetFieldInstruction()) {
+                    if (type.equals(arguments[currentTypeIndex].toString())) {
+                        collector.add(instruction);
+                        if (collector.size() > 0) {
+                            list.add(collector);
+                            collector = new InstructionsCollector();
+                        }
+                        currentTypeIndex++;
+                    } else {
+                        collector.add(instruction);
+                    }
                 }
             }
             else {
                 collector.add(instruction);
             }
+
         }
         list.add(collector);
+        list = list.stream().filter(l -> l.size() > 0).collect(Collectors.toCollection(ArrayList::new));
         return list;
     }
 
@@ -112,7 +229,7 @@ public class ConcatenationInstruction implements Instruction {
     public String toString() {
         var joiner = new StringJoiner("\n---> ");
         instructions.forEach(i -> joiner.add(i.toString()));
-        return "Concatenation : \n---> " + joiner;
+        return "Concatenation ( "+ Arrays.toString(arguments) +" ) : \n---> " + joiner;
     }
 
     /**
@@ -120,7 +237,7 @@ public class ConcatenationInstruction implements Instruction {
      * @return false
      */
     @Override
-    public boolean isAloadInstruction() {
+    public boolean isLoadInstruction() {
         return false;
     }
 }

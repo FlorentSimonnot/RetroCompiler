@@ -4,6 +4,7 @@ import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * 
@@ -50,8 +51,12 @@ public class VarInstruction implements Instruction {
      * Tests if the variable instruction is an load instruction.
      */
     @Override
-    public boolean isAloadInstruction() {
+    public boolean isLoadInstruction() {
         return opcode == Opcodes.ALOAD || opcode == Opcodes.ILOAD || opcode == Opcodes.DLOAD || opcode == Opcodes.LLOAD;
+    }
+
+    public Optional<Integer> getVar(){
+        return Optional.of(var);
     }
 
     /**

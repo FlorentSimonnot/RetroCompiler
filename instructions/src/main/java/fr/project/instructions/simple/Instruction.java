@@ -2,6 +2,8 @@ package fr.project.instructions.simple;
 
 import org.objectweb.asm.MethodVisitor;
 
+import java.util.Optional;
+
 /**
  * 
  * An interface that represents any type of instruction of a .class file.
@@ -25,10 +27,10 @@ public interface Instruction {
     default void addInstruction(Instruction instruction){/*Nothing*/}
     
     /**
-     * Tests if an Instruction is an aload instruction.
-     * @return true if this Instruction is an aload, false if not
+     * Tests if an Instruction is a load instruction.
+     * @return true if this Instruction is a load, false if not
      */
-    default boolean isAloadInstruction(){return false;}
+    default boolean isLoadInstruction(){return false;}
     
     /**
      * Tests if an Instruction is a record invoke init instruction.
@@ -65,4 +67,16 @@ public interface Instruction {
      * @return true if this Instruction is a Method instruction which invoke the addSuppressed method from java.lang.Throwable, false if not
      */
     default boolean isAddSuppressedInvoke(){return false;}
+
+    default boolean isInvokeDynamicInstruction(){return false;}
+
+    default boolean isMethodInstruction(){return false;}
+
+    default boolean isGetFieldInstruction(){return false;}
+
+    default Optional<String> getName(){return Optional.empty();}
+
+    default Optional<String> getOwner(){return Optional.empty();}
+
+    default Optional<Integer> getVar(){return Optional.empty();}
 }

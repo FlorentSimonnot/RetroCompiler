@@ -74,7 +74,29 @@ public class MyRecordClassWriter implements Writer{
         }
     }
 
+    private boolean isEqualsMethodCustom(Method m){
+        return !m.haveInvokeDynamicInstructionForEqualsMethod(getMyClass());
+    }
+
+    private boolean isHashCodeMethodCustom(Method m){
+        return !m.haveInvokeDynamicInstructionForHashCodeMethod(getMyClass());
+    }
+
+    private boolean isToStringMethodCustom(Method m){
+        return !m.haveInvokeDynamicInstructionForToStringMethod(getMyClass());
+    }
+
     private void writeEqualsMethodForRecord(Method m) {
+
+        if(isEqualsMethodCustom(m)){
+            writer.setMethodVisitor(writer.getClassWriter().visitMethod(m.getAccess(), m.getName(), m.getDescriptor(), null, m.getExceptions()));
+            m.writeAllInstructions(writer.getVersion(), writer.getMethodVisitor(), writer.getMyClass().getClassName());
+            // this code uses a maximum of one stack element and one local variable
+            writer.getMethodVisitor().visitMaxs(0, 0);
+            writer.getMethodVisitor().visitEnd();
+            return;
+        }
+
         writer.setMethodVisitor(writer.getClassWriter().visitMethod(m.getAccess(), m.getName(), m.getDescriptor(), null, m.getExceptions()));
         var mw = writer.getMethodVisitor();
         mw.visitCode();
@@ -87,7 +109,7 @@ public class MyRecordClassWriter implements Writer{
         mw.visitInsn(Opcodes.IRETURN);
 
         mw.visitLabel(l1);
-        //mw.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
+        mw.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
 
         mw.visitVarInsn(Opcodes.ALOAD, 1);
         mw.visitTypeInsn(Opcodes.CHECKCAST, writer.getMyClass().getClassName());
@@ -106,11 +128,13 @@ public class MyRecordClassWriter implements Writer{
         mw.visitJumpInsn(Opcodes.GOTO, returnLabel);
         //Here we visit the label because one of fields are not equals
         mw.visitLabel(notEqualLabel);
-        //mw.visitFrame(Opcodes.F_APPEND, 1, new Object[]{"RecordClassTestEquals"}, 0, null);
+        //mw.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
+        mw.visitFrame(Opcodes.F_APPEND, 1, new Object[]{writer.getMyClass().getClassName()}, 0, null);
         mw.visitInsn(Opcodes.ICONST_0);
         //Return the result of comparisons
         mw.visitLabel(returnLabel);
-        //mw.visitFrame(Opcodes.F_SAME1, 0, new Object[]{"RecordClassTestEquals"}, 1, new Object[]{1});
+        //mw.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
+        mw.visitFrame(Opcodes.F_SAME1, 0, new Object[]{writer.getMyClass().getClassName()}, 1, new Object[]{1});
         mw.visitInsn(Opcodes.IRETURN);
         mw.visitMaxs(0, 0);
         mw.visitEnd();
@@ -135,6 +159,16 @@ public class MyRecordClassWriter implements Writer{
     }
 
     private void writeHashCodeMethodForRecord(Method m){
+
+        if(isHashCodeMethodCustom(m)){
+            writer.setMethodVisitor(writer.getClassWriter().visitMethod(m.getAccess(), m.getName(), m.getDescriptor(), null, m.getExceptions()));
+            m.writeAllInstructions(writer.getVersion(), writer.getMethodVisitor(), writer.getMyClass().getClassName());
+            // this code uses a maximum of one stack element and one local variable
+            writer.getMethodVisitor().visitMaxs(0, 0);
+            writer.getMethodVisitor().visitEnd();
+            return;
+        }
+
         writer.setMethodVisitor(writer.getClassWriter().visitMethod(m.getAccess(), m.getName(), m.getDescriptor(), null, m.getExceptions()));
         var mw = writer.getMethodVisitor();
         mw.visitCode();
@@ -172,10 +206,10 @@ public class MyRecordClassWriter implements Writer{
                 var labelAddBoolHashCode = new Label();
                 mv.visitJumpInsn(Opcodes.GOTO, labelAddBoolHashCode);
                 mv.visitLabel(labelBool);
-                //mv.visitFrame(Opcodes.F_FULL, 2,  new Object[]{"RecordClassTestEquals", 1}, 1, new Object[]{1});
+                mv.visitFrame(Opcodes.F_FULL, 2,  new Object[]{"RecordClassTestEquals", 1}, 1, new Object[]{1});
                 mv.visitInsn(Opcodes.ICONST_1);
                 mv.visitLabel(labelAddBoolHashCode);
-                //mv.visitFrame(Opcodes.F_FULL, 2,  new Object[]{"RecordClassTestEquals", 1}, 2, new Object[]{1, 1});
+                mv.visitFrame(Opcodes.F_FULL, 2,  new Object[]{"RecordClassTestEquals", 1}, 2, new Object[]{1, 1});
                 mv.visitInsn(Opcodes.IADD);
                 break;
             }
@@ -211,6 +245,16 @@ public class MyRecordClassWriter implements Writer{
     }
 
     private void writeToStringMethodForRecord(Method m){
+
+        if(isToStringMethodCustom(m)){
+            writer.setMethodVisitor(writer.getClassWriter().visitMethod(m.getAccess(), m.getName(), m.getDescriptor(), null, m.getExceptions()));
+            m.writeAllInstructions(writer.getVersion(), writer.getMethodVisitor(), writer.getMyClass().getClassName());
+            // this code uses a maximum of one stack element and one local variable
+            writer.getMethodVisitor().visitMaxs(0, 0);
+            writer.getMethodVisitor().visitEnd();
+            return;
+        }
+
         writer.setMethodVisitor(writer.getClassWriter().visitMethod(m.getAccess(), m.getName(), m.getDescriptor(), null, m.getExceptions()));
 
         var mw = writer.getMethodVisitor();
@@ -229,30 +273,21 @@ public class MyRecordClassWriter implements Writer{
             mw.visitLdcInsn(f.getName()+"=");
             mw.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(Ljava/lang/String;)Ljava/lang/StringBuilder;", false);
 
+            var descriptor = "";
+
             if(f.getDescriptor().equals("B")){
-                mw.visitInsn(Opcodes.POP);
-                mw.visitInsn(Opcodes.ICONST_1);
-                mw.visitIntInsn(Opcodes.NEWARRAY, 8);
-                mw.visitVarInsn(Opcodes.ASTORE, 2);
-                mw.visitVarInsn(Opcodes.ALOAD, 2);
-                mw.visitInsn(Opcodes.ICONST_0);
-                mw.visitVarInsn(Opcodes.ALOAD, 0);
-                mw.visitFieldInsn(Opcodes.GETFIELD, writer.getMyClass().getClassName(), f.getName(), f.getDescriptor());
-                mw.visitInsn(Opcodes.BASTORE);
-                mw.visitVarInsn(Opcodes.ALOAD, 1);
-                mw.visitVarInsn(Opcodes.ALOAD, 2);
-                mw.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(Ljava/lang/Object;)Ljava/lang/StringBuilder;", false);
+                descriptor = "I";
             }
-            else if(f.getDescriptor().startsWith("[")){
-                mw.visitVarInsn(Opcodes.ALOAD, 0);
-                mw.visitFieldInsn(Opcodes.GETFIELD, writer.getMyClass().getClassName(), f.getName(), f.getDescriptor());
-                mw.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(Ljava/lang/Object;)Ljava/lang/StringBuilder;", false);
+            else if(f.getDescriptor().startsWith("[") || f.getDescriptor().startsWith("L")){
+                descriptor = "Ljava/lang/Object;";
             }
             else{
-                mw.visitVarInsn(Opcodes.ALOAD, 0);
-                mw.visitFieldInsn(Opcodes.GETFIELD, writer.getMyClass().getClassName(), f.getName(), f.getDescriptor());
-                mw.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "("+f.getDescriptor()+")Ljava/lang/StringBuilder;", false);
+                descriptor = f.getDescriptor();
             }
+
+            mw.visitVarInsn(Opcodes.ALOAD, 0);
+            mw.visitFieldInsn(Opcodes.GETFIELD, writer.getMyClass().getClassName(), f.getName(), f.getDescriptor());
+            mw.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "("+descriptor+")Ljava/lang/StringBuilder;", false);
 
             if(count < numberOfFields-1) {
                 mw.visitLdcInsn(", ");

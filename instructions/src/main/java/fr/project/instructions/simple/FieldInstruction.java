@@ -77,10 +77,20 @@ public class FieldInstruction implements Instruction {
                 return;
             }
         }
-        if(opcode == Opcodes.GETFIELD && !lastInstruction.isAloadInstruction()) {
-            mv.visitVarInsn(Opcodes.ALOAD, 0);
+        if(opcode == Opcodes.GETFIELD) {
+            if(!lastInstruction.isLoadInstruction())
+                mv.visitVarInsn(Opcodes.ALOAD, 0);
+            else{
+                if(lastInstruction.getVar().isPresent() && lastInstruction.getVar().get() != 0)
+                    mv.visitVarInsn(Opcodes.ALOAD, 0);
+            }
         }
         mv.visitFieldInsn(opcode, owner, name, descriptor);
+    }
+
+    @Override
+    public boolean isGetFieldInstruction() {
+        return opcode == Opcodes.GETFIELD;
     }
 
     @Override

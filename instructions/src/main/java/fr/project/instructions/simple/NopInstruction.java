@@ -30,7 +30,7 @@ public class NopInstruction implements Instruction {
      * Tests if the zero instruction is an aload instruction.
      */
     @Override
-    public boolean isAloadInstruction() {
+    public boolean isLoadInstruction() {
         return opcode == Opcodes.ALOAD;
     }
 
@@ -42,4 +42,11 @@ public class NopInstruction implements Instruction {
         mv.visitInsn(opcode);
     }
 
+    @Override
+    public String getType() {
+        if(opcode == Opcodes.ARRAYLENGTH){
+            return "(I)";
+        }
+        return "()";
+    }
 }

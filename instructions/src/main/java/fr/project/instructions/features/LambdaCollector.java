@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 /**
  * A lambdas collector.
@@ -37,47 +36,17 @@ public class LambdaCollector {
     }
 
     /**
-     * Tests if a lambda is in the collector.
-     * @param name - a lambda's name
-     * @param owner - the lambda's owner class
-     * @return true if the lambda is already in the collector, false if not
+     * Get the last index which exists.
+     * @return int - the last index in the collector
      */
-    public boolean lambdaAlreadyExists(String name, String owner){
-        for(LambdaInstruction l : lambdas.keySet()){
-            if(l.getOwnerClass().substring(1).equals(owner) && l.getName().equals(name)){
+    public int getIndex(){return lambdas.size()-1;}
+
+    public boolean contains(String name, String owner){
+        for (Map.Entry<LambdaInstruction, Integer> entry : lambdas.entrySet()) {
+            if(entry.getKey().getName().equals(name) && entry.getKey().getOwnerClass().equals(owner))
                 return true;
-            }
         }
         return false;
     }
 
-    /**
-     * Gets a lambda's index.
-     * @param name - a lambda's name
-     * @param owner - the lambda's owner class
-     * @return the lambda's index if it is in the collector
-     */
-    public Integer getLambdaIndex(String name, String owner){
-        for(LambdaInstruction l : lambdas.keySet()){
-            if(l.getOwnerClass().substring(1).equals(owner) && l.getName().equals(name)){
-                return lambdas.get(l);
-            }
-        }
-        throw new IllegalStateException();
-    }
-
-    /**
-     * Gets a lambda.
-     * @param name - a lambda's name
-     * @param owner - the lambda's owner class
-     * @return the lambda if it is in the collector
-     */
-    public LambdaInstruction getLambda(String name, String owner){
-        for(LambdaInstruction l : lambdas.keySet()){
-            if(l.getOwnerClass().substring(1).equals(owner) && l.getName().equals(name)){
-                return l;
-            }
-        }
-        throw new IllegalStateException();
-    }
 }

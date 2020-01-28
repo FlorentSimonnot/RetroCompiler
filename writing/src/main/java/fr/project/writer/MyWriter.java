@@ -98,8 +98,9 @@ public class MyWriter implements Writer{
     }
 
     private Method createLambdaMethod(LambdaInstruction lambdaInstruction){
-        return new Method(Opcodes.ACC_PUBLIC + Opcodes.ACC_ABSTRACT, lambdaInstruction.getName(),
-                Type.getMethodDescriptor(lambdaInstruction.getReturnType(), lambdaInstruction.getArgumentsTypeOfLambda()), null, true, null);
+        return new Method(Opcodes.ACC_PUBLIC, lambdaInstruction.getName(),
+                Type.getMethodDescriptor(lambdaInstruction.getInterfaceReturnType(), lambdaInstruction.getInterfaceArgumentsType()),
+                null, true, null);
 
     }
 
@@ -111,6 +112,7 @@ public class MyWriter implements Writer{
         LambdaWriter.createFields(lambdaClass, lambdaInstruction);
         LambdaWriter.createConstructor(lambdaClass, lambdaInstruction);
         LambdaWriter.createLambdaFactory(lambdaClass, lambdaInstruction, myClass.getClassName(), index);
+        LambdaWriter.createBridgeMethod(myClass, lambdaInstruction, index);
         LambdaWriter.createLambdaCalledMethod(lambdaClass, methodLambda, lambdaInstruction, myClass.getClassName());
 
         var lambdaWriter = new MyWriter(lambdaClass, version, this.warningObservers, this.options);
@@ -127,6 +129,8 @@ public class MyWriter implements Writer{
 
             //Now write the interface file
             var interfac = new MyInterface("interface"+myClass.getClassName()+"$MyLambda"+index, "java/lang/Object",Opcodes.ACC_ABSTRACT+Opcodes.ACC_PUBLIC+Opcodes.ACC_INTERFACE, version);
+            //add abstract opcode for the method in interface
+            methodLambda.setAccess(Opcodes.ACC_PUBLIC + Opcodes.ACC_ABSTRACT);
             interfac.addMethod(methodLambda);
             var writer = new InterfaceWriter(interfac);
             writer.createClass();
@@ -198,11 +202,7 @@ public class MyWriter implements Writer{
     }
 
     private void writeMethod(Method m) {
-        if(m.getName().contains("$"))
-            mw = cw.visitMethod(Opcodes.ACC_PUBLIC, m.getName(), m.getDescriptor(), m.getSignature(), m.getExceptions());
-        else{
-            mw = cw.visitMethod(m.getAccess(), m.getName(), m.getDescriptor(), m.getSignature(), m.getExceptions());
-        }
+        mw = cw.visitMethod(m.getAccess(), m.getName(), m.getDescriptor(), m.getSignature(), m.getExceptions());
         mw.visitCode();
         m.writeAllInstructions(version, mw, myClass.getClassName());
         mw.visitMaxs(0, 0);

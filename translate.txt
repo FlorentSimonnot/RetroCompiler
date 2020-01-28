@@ -1,0 +1,739 @@
+Classfile /Users/florentsimonnot/Documents/M1/RetroCompiler/RecordClassTestEquals.class
+  Last modified 26 janv. 2020; size 3095 bytes
+  SHA-256 checksum 1c86ee21c65010c4b21ff8fe5e5beb2793f89362227ae74d7bdd6e2079fdc7c8
+  Compiled from "RecordClassTestEquals.java"
+final class RecordClassTestEquals
+  minor version: 0
+  major version: 51
+  flags: (0x0030) ACC_FINAL, ACC_SUPER
+  this_class: #2                          // RecordClassTestEquals
+  super_class: #4                         // java/lang/Object
+  interfaces: 0, fields: 9, methods: 14, attributes: 2
+Constant pool:
+    #1 = Utf8               RecordClassTestEquals
+    #2 = Class              #1            // RecordClassTestEquals
+    #3 = Utf8               java/lang/Object
+    #4 = Class              #3            // java/lang/Object
+    #5 = Utf8               java/lang/invoke/MethodHandles$Lookup
+    #6 = Class              #5            // java/lang/invoke/MethodHandles$Lookup
+    #7 = Utf8               java/lang/invoke/MethodHandles
+    #8 = Class              #7            // java/lang/invoke/MethodHandles
+    #9 = Utf8               Lookup
+   #10 = Utf8               RecordClassTestEquals.java
+   #11 = Utf8               lo
+   #12 = Utf8               I
+   #13 = Utf8               hi
+   #14 = Utf8               a
+   #15 = Utf8               Ljava/lang/String;
+   #16 = Utf8               d
+   #17 = Utf8               D
+   #18 = Utf8               bool
+   #19 = Utf8               Z
+   #20 = Utf8               f
+   #21 = Utf8               F
+   #22 = Utf8               l
+   #23 = Utf8               J
+   #24 = Utf8               b
+   #25 = Utf8               B
+   #26 = Utf8               array
+   #27 = Utf8               [I
+   #28 = Utf8               <init>
+   #29 = Utf8               (IILjava/lang/String;DZFJB[I)V
+   #30 = Utf8               ()V
+   #31 = NameAndType        #28:#30       // "<init>":()V
+   #32 = Methodref          #4.#31        // java/lang/Object."<init>":()V
+   #33 = Utf8               java/lang/IllegalArgumentException
+   #34 = Class              #33           // java/lang/IllegalArgumentException
+   #35 = Utf8               (%d,%d)
+   #36 = String             #35           // (%d,%d)
+   #37 = Utf8               java/lang/Integer
+   #38 = Class              #37           // java/lang/Integer
+   #39 = Utf8               valueOf
+   #40 = Utf8               (I)Ljava/lang/Integer;
+   #41 = NameAndType        #39:#40       // valueOf:(I)Ljava/lang/Integer;
+   #42 = Methodref          #38.#41       // java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+   #43 = Utf8               java/lang/String
+   #44 = Class              #43           // java/lang/String
+   #45 = Utf8               format
+   #46 = Utf8               (Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+   #47 = NameAndType        #45:#46       // format:(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+   #48 = Methodref          #44.#47       // java/lang/String.format:(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+   #49 = Utf8               (Ljava/lang/String;)V
+   #50 = NameAndType        #28:#49       // "<init>":(Ljava/lang/String;)V
+   #51 = Methodref          #34.#50       // java/lang/IllegalArgumentException."<init>":(Ljava/lang/String;)V
+   #52 = Class              #27           // "[I"
+   #53 = NameAndType        #11:#12       // lo:I
+   #54 = Fieldref           #2.#53        // RecordClassTestEquals.lo:I
+   #55 = NameAndType        #13:#12       // hi:I
+   #56 = Fieldref           #2.#55        // RecordClassTestEquals.hi:I
+   #57 = NameAndType        #14:#15       // a:Ljava/lang/String;
+   #58 = Fieldref           #2.#57        // RecordClassTestEquals.a:Ljava/lang/String;
+   #59 = NameAndType        #16:#17       // d:D
+   #60 = Fieldref           #2.#59        // RecordClassTestEquals.d:D
+   #61 = NameAndType        #18:#19       // bool:Z
+   #62 = Fieldref           #2.#61        // RecordClassTestEquals.bool:Z
+   #63 = NameAndType        #20:#21       // f:F
+   #64 = Fieldref           #2.#63        // RecordClassTestEquals.f:F
+   #65 = NameAndType        #22:#23       // l:J
+   #66 = Fieldref           #2.#65        // RecordClassTestEquals.l:J
+   #67 = NameAndType        #24:#25       // b:B
+   #68 = Fieldref           #2.#67        // RecordClassTestEquals.b:B
+   #69 = NameAndType        #26:#27       // array:[I
+   #70 = Fieldref           #2.#69        // RecordClassTestEquals.array:[I
+   #71 = Utf8               main
+   #72 = Utf8               ([Ljava/lang/String;)V
+   #73 = Utf8               java/lang/StringBuilder
+   #74 = Class              #73           // java/lang/StringBuilder
+   #75 = Methodref          #74.#31       // java/lang/StringBuilder."<init>":()V
+   #76 = String             #14           // a
+   #77 = Double             5.0d
+   #79 = Float              3.0f
+   #80 = Long               3l
+   #82 = NameAndType        #28:#29       // "<init>":(IILjava/lang/String;DZFJB[I)V
+   #83 = Methodref          #2.#82        // RecordClassTestEquals."<init>":(IILjava/lang/String;DZFJB[I)V
+   #84 = Long               4l
+   #86 = Utf8               java/lang/System
+   #87 = Class              #86           // java/lang/System
+   #88 = Utf8               out
+   #89 = Utf8               Ljava/io/PrintStream;
+   #90 = NameAndType        #88:#89       // out:Ljava/io/PrintStream;
+   #91 = Fieldref           #87.#90       // java/lang/System.out:Ljava/io/PrintStream;
+   #92 = Utf8               equals
+   #93 = Utf8               (Ljava/lang/Object;)Z
+   #94 = NameAndType        #92:#93       // equals:(Ljava/lang/Object;)Z
+   #95 = Methodref          #2.#94        // RecordClassTestEquals.equals:(Ljava/lang/Object;)Z
+   #96 = Utf8               java/io/PrintStream
+   #97 = Class              #96           // java/io/PrintStream
+   #98 = Utf8               println
+   #99 = Utf8               (Z)V
+  #100 = NameAndType        #98:#99       // println:(Z)V
+  #101 = Methodref          #97.#100      // java/io/PrintStream.println:(Z)V
+  #102 = Utf8               (Ljava/lang/Object;)V
+  #103 = NameAndType        #98:#102      // println:(Ljava/lang/Object;)V
+  #104 = Methodref          #97.#103      // java/io/PrintStream.println:(Ljava/lang/Object;)V
+  #105 = Utf8               ([B)V
+  #106 = NameAndType        #28:#105      // "<init>":([B)V
+  #107 = Methodref          #44.#106      // java/lang/String."<init>":([B)V
+  #108 = Utf8               append
+  #109 = Utf8               (Ljava/lang/String;)Ljava/lang/StringBuilder;
+  #110 = NameAndType        #108:#109     // append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+  #111 = Methodref          #74.#110      // java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+  #112 = Utf8               toString
+  #113 = Utf8               ()Ljava/lang/String;
+  #114 = Utf8               RecordClassTestEquals[
+  #115 = String             #114          // RecordClassTestEquals[
+  #116 = Methodref          #74.#50       // java/lang/StringBuilder."<init>":(Ljava/lang/String;)V
+  #117 = Utf8               lo=
+  #118 = String             #117          // lo=
+  #119 = Utf8               (I)Ljava/lang/StringBuilder;
+  #120 = NameAndType        #108:#119     // append:(I)Ljava/lang/StringBuilder;
+  #121 = Methodref          #74.#120      // java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+  #122 = Utf8               ,
+  #123 = String             #122          // ,
+  #124 = Utf8               hi=
+  #125 = String             #124          // hi=
+  #126 = Utf8               a=
+  #127 = String             #126          // a=
+  #128 = Utf8               d=
+  #129 = String             #128          // d=
+  #130 = Utf8               (D)Ljava/lang/StringBuilder;
+  #131 = NameAndType        #108:#130     // append:(D)Ljava/lang/StringBuilder;
+  #132 = Methodref          #74.#131      // java/lang/StringBuilder.append:(D)Ljava/lang/StringBuilder;
+  #133 = Utf8               bool=
+  #134 = String             #133          // bool=
+  #135 = Utf8               (Z)Ljava/lang/StringBuilder;
+  #136 = NameAndType        #108:#135     // append:(Z)Ljava/lang/StringBuilder;
+  #137 = Methodref          #74.#136      // java/lang/StringBuilder.append:(Z)Ljava/lang/StringBuilder;
+  #138 = Utf8               f=
+  #139 = String             #138          // f=
+  #140 = Utf8               (F)Ljava/lang/StringBuilder;
+  #141 = NameAndType        #108:#140     // append:(F)Ljava/lang/StringBuilder;
+  #142 = Methodref          #74.#141      // java/lang/StringBuilder.append:(F)Ljava/lang/StringBuilder;
+  #143 = Utf8               l=
+  #144 = String             #143          // l=
+  #145 = Utf8               (J)Ljava/lang/StringBuilder;
+  #146 = NameAndType        #108:#145     // append:(J)Ljava/lang/StringBuilder;
+  #147 = Methodref          #74.#146      // java/lang/StringBuilder.append:(J)Ljava/lang/StringBuilder;
+  #148 = Utf8               b=
+  #149 = String             #148          // b=
+  #150 = Utf8               array=
+  #151 = String             #150          // array=
+  #152 = Utf8               (Ljava/lang/Object;)Ljava/lang/StringBuilder;
+  #153 = NameAndType        #108:#152     // append:(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+  #154 = Methodref          #74.#153      // java/lang/StringBuilder.append:(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+  #155 = Utf8               ]
+  #156 = String             #155          // ]
+  #157 = NameAndType        #112:#113     // toString:()Ljava/lang/String;
+  #158 = Methodref          #74.#157      // java/lang/StringBuilder.toString:()Ljava/lang/String;
+  #159 = Utf8               hashCode
+  #160 = Utf8               ()I
+  #161 = Utf8               (Ljava/lang/Object;)I
+  #162 = NameAndType        #159:#161     // hashCode:(Ljava/lang/Object;)I
+  #163 = Methodref          #44.#162      // java/lang/String.hashCode:(Ljava/lang/Object;)I
+  #164 = Utf8               java/lang/Double
+  #165 = Class              #164          // java/lang/Double
+  #166 = Utf8               doubleToLongBits
+  #167 = Utf8               (D)J
+  #168 = NameAndType        #166:#167     // doubleToLongBits:(D)J
+  #169 = Methodref          #165.#168     // java/lang/Double.doubleToLongBits:(D)J
+  #170 = Utf8               java/lang/Float
+  #171 = Class              #170          // java/lang/Float
+  #172 = Utf8               floatToIntBits
+  #173 = Utf8               (F)I
+  #174 = NameAndType        #172:#173     // floatToIntBits:(F)I
+  #175 = Methodref          #171.#174     // java/lang/Float.floatToIntBits:(F)I
+  #176 = Utf8               java/util/Arrays
+  #177 = Class              #176          // java/util/Arrays
+  #178 = Utf8               ([I)I
+  #179 = NameAndType        #159:#178     // hashCode:([I)I
+  #180 = Methodref          #177.#179     // java/util/Arrays.hashCode:([I)I
+  #181 = Methodref          #44.#94       // java/lang/String.equals:(Ljava/lang/Object;)Z
+  #182 = Utf8               ([I[I)Z
+  #183 = NameAndType        #92:#182      // equals:([I[I)Z
+  #184 = Methodref          #177.#183     // java/util/Arrays.equals:([I[I)Z
+  #185 = Utf8               ()D
+  #186 = Utf8               ()Z
+  #187 = Utf8               ()F
+  #188 = Utf8               ()J
+  #189 = Utf8               ()B
+  #190 = Utf8               ()[I
+  #191 = Utf8               Code
+  #192 = Utf8               StackMapTable
+  #193 = Utf8               InnerClasses
+  #194 = Utf8               SourceFile
+{
+  private final int lo;
+    descriptor: I
+    flags: (0x0012) ACC_PRIVATE, ACC_FINAL
+
+  private final int hi;
+    descriptor: I
+    flags: (0x0012) ACC_PRIVATE, ACC_FINAL
+
+  private final java.lang.String a;
+    descriptor: Ljava/lang/String;
+    flags: (0x0012) ACC_PRIVATE, ACC_FINAL
+
+  private final double d;
+    descriptor: D
+    flags: (0x0012) ACC_PRIVATE, ACC_FINAL
+
+  private final boolean bool;
+    descriptor: Z
+    flags: (0x0012) ACC_PRIVATE, ACC_FINAL
+
+  private final float f;
+    descriptor: F
+    flags: (0x0012) ACC_PRIVATE, ACC_FINAL
+
+  private final long l;
+    descriptor: J
+    flags: (0x0012) ACC_PRIVATE, ACC_FINAL
+
+  private final byte b;
+    descriptor: B
+    flags: (0x0012) ACC_PRIVATE, ACC_FINAL
+
+  private final int[] array;
+    descriptor: [I
+    flags: (0x0012) ACC_PRIVATE, ACC_FINAL
+
+  public RecordClassTestEquals(int, int, java.lang.String, double, boolean, float, long, byte, int[]);
+    descriptor: (IILjava/lang/String;DZFJB[I)V
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=7, locals=12, args_size=10
+         0: aload_0
+         1: invokespecial #32                 // Method java/lang/Object."<init>":()V
+         4: iload_1
+         5: iload_2
+         6: if_icmple     40
+         9: new           #34                 // class java/lang/IllegalArgumentException
+        12: dup
+        13: ldc           #36                 // String (%d,%d)
+        15: iconst_2
+        16: anewarray     #4                  // class java/lang/Object
+        19: dup
+        20: iconst_0
+        21: iload_1
+        22: invokestatic  #42                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+        25: aastore
+        26: dup
+        27: iconst_1
+        28: iload_2
+        29: invokestatic  #42                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+        32: aastore
+        33: invokestatic  #48                 // Method java/lang/String.format:(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+        36: invokespecial #51                 // Method java/lang/IllegalArgumentException."<init>":(Ljava/lang/String;)V
+        39: athrow
+        40: aload_0
+        41: iload_1
+        42: putfield      #54                 // Field lo:I
+        45: aload_0
+        46: iload_2
+        47: putfield      #56                 // Field hi:I
+        50: aload_0
+        51: aload_3
+        52: putfield      #58                 // Field a:Ljava/lang/String;
+        55: aload_0
+        56: dload         4
+        58: putfield      #60                 // Field d:D
+        61: aload_0
+        62: iload         6
+        64: putfield      #62                 // Field bool:Z
+        67: aload_0
+        68: fload         7
+        70: putfield      #64                 // Field f:F
+        73: aload_0
+        74: lload         8
+        76: putfield      #66                 // Field l:J
+        79: aload_0
+        80: iload         10
+        82: putfield      #68                 // Field b:B
+        85: aload_0
+        86: aload         11
+        88: putfield      #70                 // Field array:[I
+        91: return
+      StackMapTable: number_of_entries = 1
+        frame_type = 255 /* full_frame */
+          offset_delta = 40
+          locals = [ class RecordClassTestEquals, int, int, class java/lang/String, double, int, float, long, int, class "[I" ]
+          stack = []
+
+  public static void main(java.lang.String[]);
+    descriptor: ([Ljava/lang/String;)V
+    flags: (0x0009) ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=16, locals=8, args_size=1
+         0: bipush        100
+         2: istore_1
+         3: iload_1
+         4: istore_2
+         5: new           #74                 // class java/lang/StringBuilder
+         8: dup
+         9: invokespecial #75                 // Method java/lang/StringBuilder."<init>":()V
+        12: astore_3
+        13: new           #2                  // class RecordClassTestEquals
+        16: dup
+        17: iconst_5
+        18: bipush        6
+        20: ldc           #76                 // String a
+        22: ldc2_w        #77                 // double 5.0d
+        25: iconst_1
+        26: ldc           #79                 // float 3.0f
+        28: ldc2_w        #80                 // long 3l
+        31: iload_1
+        32: iconst_3
+        33: newarray       int
+        35: dup
+        36: iconst_0
+        37: iconst_1
+        38: iastore
+        39: dup
+        40: iconst_1
+        41: iconst_2
+        42: iastore
+        43: dup
+        44: iconst_2
+        45: iconst_3
+        46: iastore
+        47: invokespecial #83                 // Method "<init>":(IILjava/lang/String;DZFJB[I)V
+        50: astore        4
+        52: new           #2                  // class RecordClassTestEquals
+        55: dup
+        56: iconst_4
+        57: iconst_5
+        58: ldc           #76                 // String a
+        60: ldc2_w        #77                 // double 5.0d
+        63: iconst_0
+        64: ldc           #79                 // float 3.0f
+        66: ldc2_w        #84                 // long 4l
+        69: iload_1
+        70: iconst_3
+        71: newarray       int
+        73: dup
+        74: iconst_0
+        75: iconst_1
+        76: iastore
+        77: dup
+        78: iconst_1
+        79: iconst_2
+        80: iastore
+        81: dup
+        82: iconst_2
+        83: iconst_3
+        84: iastore
+        85: invokespecial #83                 // Method "<init>":(IILjava/lang/String;DZFJB[I)V
+        88: astore        5
+        90: getstatic     #91                 // Field java/lang/System.out:Ljava/io/PrintStream;
+        93: aload         4
+        95: aload         4
+        97: invokevirtual #95                 // Method equals:(Ljava/lang/Object;)Z
+       100: invokevirtual #101                // Method java/io/PrintStream.println:(Z)V
+       103: getstatic     #91                 // Field java/lang/System.out:Ljava/io/PrintStream;
+       106: aload         4
+       108: aload         5
+       110: invokevirtual #95                 // Method equals:(Ljava/lang/Object;)Z
+       113: invokevirtual #101                // Method java/io/PrintStream.println:(Z)V
+       116: getstatic     #91                 // Field java/lang/System.out:Ljava/io/PrintStream;
+       119: aload         4
+       121: invokevirtual #104                // Method java/io/PrintStream.println:(Ljava/lang/Object;)V
+       124: iconst_1
+       125: newarray       byte
+       127: astore        6
+       129: aload         6
+       131: iconst_0
+       132: iload_1
+       133: bastore
+       134: new           #44                 // class java/lang/String
+       137: dup
+       138: aload         6
+       140: invokespecial #107                // Method java/lang/String."<init>":([B)V
+       143: astore        7
+       145: aload_3
+       146: aload         7
+       148: invokevirtual #111                // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+       151: pop
+       152: return
+
+  public java.lang.String toString();
+    descriptor: ()Ljava/lang/String;
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=3, locals=3, args_size=1
+         0: new           #74                 // class java/lang/StringBuilder
+         3: dup
+         4: ldc           #115                // String RecordClassTestEquals[
+         6: invokespecial #116                // Method java/lang/StringBuilder."<init>":(Ljava/lang/String;)V
+         9: astore_1
+        10: aload_1
+        11: ldc           #118                // String lo=
+        13: invokevirtual #111                // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+        16: aload_0
+        17: getfield      #54                 // Field lo:I
+        20: invokevirtual #121                // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+        23: ldc           #123                // String ,
+        25: invokevirtual #111                // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+        28: ldc           #125                // String hi=
+        30: invokevirtual #111                // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+        33: aload_0
+        34: getfield      #56                 // Field hi:I
+        37: invokevirtual #121                // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+        40: ldc           #123                // String ,
+        42: invokevirtual #111                // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+        45: ldc           #127                // String a=
+        47: invokevirtual #111                // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+        50: aload_0
+        51: getfield      #58                 // Field a:Ljava/lang/String;
+        54: invokevirtual #111                // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+        57: ldc           #123                // String ,
+        59: invokevirtual #111                // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+        62: ldc           #129                // String d=
+        64: invokevirtual #111                // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+        67: aload_0
+        68: getfield      #60                 // Field d:D
+        71: invokevirtual #132                // Method java/lang/StringBuilder.append:(D)Ljava/lang/StringBuilder;
+        74: ldc           #123                // String ,
+        76: invokevirtual #111                // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+        79: ldc           #134                // String bool=
+        81: invokevirtual #111                // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+        84: aload_0
+        85: getfield      #62                 // Field bool:Z
+        88: invokevirtual #137                // Method java/lang/StringBuilder.append:(Z)Ljava/lang/StringBuilder;
+        91: ldc           #123                // String ,
+        93: invokevirtual #111                // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+        96: ldc           #139                // String f=
+        98: invokevirtual #111                // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+       101: aload_0
+       102: getfield      #64                 // Field f:F
+       105: invokevirtual #142                // Method java/lang/StringBuilder.append:(F)Ljava/lang/StringBuilder;
+       108: ldc           #123                // String ,
+       110: invokevirtual #111                // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+       113: ldc           #144                // String l=
+       115: invokevirtual #111                // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+       118: aload_0
+       119: getfield      #66                 // Field l:J
+       122: invokevirtual #147                // Method java/lang/StringBuilder.append:(J)Ljava/lang/StringBuilder;
+       125: ldc           #123                // String ,
+       127: invokevirtual #111                // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+       130: ldc           #149                // String b=
+       132: invokevirtual #111                // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+       135: iload_1
+       136: istore_2
+       137: invokevirtual #121                // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+       140: ldc           #123                // String ,
+       142: invokevirtual #111                // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+       145: ldc           #151                // String array=
+       147: invokevirtual #111                // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+       150: aload_0
+       151: getfield      #70                 // Field array:[I
+       154: invokevirtual #154                // Method java/lang/StringBuilder.append:(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+       157: ldc           #156                // String ]
+       159: invokevirtual #111                // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+       162: pop
+       163: aload_1
+       164: invokevirtual #158                // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+       167: areturn
+
+  public final int hashCode();
+    descriptor: ()I
+    flags: (0x0011) ACC_PUBLIC, ACC_FINAL
+    Code:
+      stack=6, locals=33, args_size=1
+         0: bipush        7
+         2: istore_1
+         3: bipush        31
+         5: iload_1
+         6: imul
+         7: aload_0
+         8: getfield      #54                 // Field lo:I
+        11: iadd
+        12: istore_1
+        13: bipush        31
+        15: iload_1
+        16: imul
+        17: aload_0
+        18: getfield      #56                 // Field hi:I
+        21: iadd
+        22: istore_1
+        23: bipush        31
+        25: iload_1
+        26: imul
+        27: aload_0
+        28: getfield      #58                 // Field a:Ljava/lang/String;
+        31: invokestatic  #163                // Method java/lang/String.hashCode:(Ljava/lang/Object;)I
+        34: iadd
+        35: istore_1
+        36: bipush        31
+        38: iload_1
+        39: imul
+        40: aload_0
+        41: getfield      #60                 // Field d:D
+        44: invokestatic  #169                // Method java/lang/Double.doubleToLongBits:(D)J
+        47: aload_0
+        48: getfield      #60                 // Field d:D
+        51: invokestatic  #169                // Method java/lang/Double.doubleToLongBits:(D)J
+        54: bipush        32
+        56: lushr
+        57: lxor
+        58: l2i
+        59: iadd
+        60: istore_1
+        61: bipush        31
+        63: iload_1
+        64: imul
+        65: aload_0
+        66: getfield      #62                 // Field bool:Z
+        69: ifeq          76
+        72: iconst_0
+        73: goto          77
+        76: iconst_1
+        77: iadd
+        78: istore_1
+        79: bipush        31
+        81: iload_1
+        82: imul
+        83: aload_0
+        84: getfield      #64                 // Field f:F
+        87: invokestatic  #175                // Method java/lang/Float.floatToIntBits:(F)I
+        90: iadd
+        91: istore_1
+        92: bipush        31
+        94: iload_1
+        95: imul
+        96: aload_0
+        97: getfield      #66                 // Field l:J
+       100: aload_0
+       101: getfield      #66                 // Field l:J
+       104: bipush        32
+       106: lushr
+       107: lxor
+       108: l2i
+       109: iadd
+       110: istore_1
+       111: bipush        31
+       113: iload_1
+       114: imul
+       115: aload_0
+       116: getfield      #68                 // Field b:B
+       119: iadd
+       120: istore_1
+       121: bipush        31
+       123: iload_1
+       124: imul
+       125: aload_0
+       126: getfield      #70                 // Field array:[I
+       129: invokestatic  #180                // Method java/util/Arrays.hashCode:([I)I
+       132: iadd
+       133: istore_1
+       134: iload_1
+       135: ireturn
+      StackMapTable: number_of_entries = 2
+        frame_type = 255 /* full_frame */
+          offset_delta = 76
+          locals = [ class RecordClassTestEquals, int ]
+          stack = [ int ]
+        frame_type = 255 /* full_frame */
+          offset_delta = 0
+          locals = [ class RecordClassTestEquals, int ]
+          stack = [ int, int ]
+
+  public final boolean equals(java.lang.Object);
+    descriptor: (Ljava/lang/Object;)Z
+    flags: (0x0011) ACC_PUBLIC, ACC_FINAL
+    Code:
+      stack=4, locals=3, args_size=2
+         0: aload_1
+         1: instanceof    #2                  // class RecordClassTestEquals
+         4: ifne          9
+         7: iconst_0
+         8: ireturn
+         9: aload_1
+        10: checkcast     #2                  // class RecordClassTestEquals
+        13: astore_2
+        14: aload_2
+        15: getfield      #54                 // Field lo:I
+        18: aload_0
+        19: getfield      #54                 // Field lo:I
+        22: if_icmpne     126
+        25: aload_2
+        26: getfield      #56                 // Field hi:I
+        29: aload_0
+        30: getfield      #56                 // Field hi:I
+        33: if_icmpne     126
+        36: aload_2
+        37: getfield      #58                 // Field a:Ljava/lang/String;
+        40: aload_0
+        41: getfield      #58                 // Field a:Ljava/lang/String;
+        44: invokevirtual #181                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+        47: ifeq          126
+        50: aload_2
+        51: getfield      #60                 // Field d:D
+        54: aload_0
+        55: getfield      #60                 // Field d:D
+        58: dcmpl
+        59: ifne          126
+        62: aload_2
+        63: getfield      #62                 // Field bool:Z
+        66: aload_0
+        67: getfield      #62                 // Field bool:Z
+        70: if_icmpne     126
+        73: aload_2
+        74: getfield      #64                 // Field f:F
+        77: aload_0
+        78: getfield      #64                 // Field f:F
+        81: fcmpl
+        82: ifne          126
+        85: aload_2
+        86: getfield      #66                 // Field l:J
+        89: aload_0
+        90: getfield      #66                 // Field l:J
+        93: lcmp
+        94: ifne          126
+        97: aload_2
+        98: getfield      #68                 // Field b:B
+       101: aload_0
+       102: getfield      #68                 // Field b:B
+       105: if_icmpne     126
+       108: aload_2
+       109: getfield      #70                 // Field array:[I
+       112: aload_0
+       113: getfield      #70                 // Field array:[I
+       116: invokestatic  #184                // Method java/util/Arrays.equals:([I[I)Z
+       119: ifeq          126
+       122: iconst_1
+       123: goto          127
+       126: iconst_0
+       127: ireturn
+      StackMapTable: number_of_entries = 3
+        frame_type = 9 /* same */
+        frame_type = 252 /* append */
+          offset_delta = 116
+          locals = [ class RecordClassTestEquals ]
+        frame_type = 64 /* same_locals_1_stack_item */
+          stack = [ int ]
+
+  public int lo();
+    descriptor: ()I
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: getfield      #54                 // Field lo:I
+         4: ireturn
+
+  public int hi();
+    descriptor: ()I
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: getfield      #56                 // Field hi:I
+         4: ireturn
+
+  public java.lang.String a();
+    descriptor: ()Ljava/lang/String;
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: getfield      #58                 // Field a:Ljava/lang/String;
+         4: areturn
+
+  public double d();
+    descriptor: ()D
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=2, locals=1, args_size=1
+         0: aload_0
+         1: getfield      #60                 // Field d:D
+         4: dreturn
+
+  public boolean bool();
+    descriptor: ()Z
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: getfield      #62                 // Field bool:Z
+         4: ireturn
+
+  public float f();
+    descriptor: ()F
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: getfield      #64                 // Field f:F
+         4: freturn
+
+  public long l();
+    descriptor: ()J
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=2, locals=1, args_size=1
+         0: aload_0
+         1: getfield      #66                 // Field l:J
+         4: lreturn
+
+  public byte b();
+    descriptor: ()B
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: getfield      #68                 // Field b:B
+         4: ireturn
+
+  public int[] array();
+    descriptor: ()[I
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: getfield      #70                 // Field array:[I
+         4: areturn
+}
+InnerClasses:
+  public static final #9= #6 of #8;       // Lookup=class java/lang/invoke/MethodHandles$Lookup of class java/lang/invoke/MethodHandles
+SourceFile: "RecordClassTestEquals.java"

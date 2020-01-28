@@ -1,10 +1,12 @@
 package fr.project.instructions.features;
 
+import fr.project.instructions.simple.Method;
 import org.objectweb.asm.Handle;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 /**
  * A class that represents a lambda instruction of a .class file.
@@ -18,6 +20,7 @@ public class LambdaInstruction {
     private final String descriptor;
     private final Handle methodHandle;
     private final Object[] args;
+    private Optional<Method> bridgeMethod;
 
     /**
      * Creates a new LambdaInstruction.
@@ -33,6 +36,7 @@ public class LambdaInstruction {
         this.descriptor = descriptor;
         this.methodHandle = methodHandle;
         this.args = Arrays.copyOf(args, args.length);
+        this.bridgeMethod = Optional.empty();
     }
 
     @Override
@@ -79,6 +83,8 @@ public class LambdaInstruction {
      * @return the method that handles the lambda
      */
     public Handle getMethodHandle(){return methodHandle;}
+
+    public Object[] getArgs(){return args;}
 
     /**
      * Gets the lambda's arguments.
@@ -141,6 +147,19 @@ public class LambdaInstruction {
         return Type.getMethodDescriptor(getReturnType(), getArgumentsType());
     }
 
+    public Type[] getInterfaceArgumentsType(){
+        return Type.getArgumentTypes(args[0].toString());
+    }
+
+    public Type getInterfaceReturnType(){
+        return Type.getReturnType(args[0].toString());
+    }
+
+    public void setBridgeMethod(Method method){
+        this.bridgeMethod = Optional.of(method);
+    }
+
+    public Optional<Method>  getBridgeMethod(){return this.bridgeMethod;}
 
     @Override
     public int hashCode() {

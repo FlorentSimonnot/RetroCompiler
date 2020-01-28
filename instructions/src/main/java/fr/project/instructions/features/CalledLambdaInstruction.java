@@ -3,6 +3,7 @@ package fr.project.instructions.features;
 import fr.project.instructions.simple.Instruction;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.Type;
 
 import java.util.Objects;
 
@@ -19,6 +20,11 @@ public class CalledLambdaInstruction implements Instruction {
     private final String descriptor;
     private final int index;
     private final String className;
+
+    @Override
+    public String getType() {
+        return "("+ Type.getReturnType(descriptor).toString()+")";
+    }
 
     /**
      * Creates a new CalledLambdaInstruction.
